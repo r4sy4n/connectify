@@ -14,7 +14,7 @@ router.post('/register', ( request, response ) => {
              bcrypt.hash( request.body.password, 10 ).then((hash, err) => {
                 const newUser = new User({ username: request.body.username, email: request.body.email, firstname: request.body.username, lastname: request.body.lastname, phone: request.body.phone, password: hash, usertype: request.body.usertype });
                 newUser.save().then( dbResponse => {
-                    response.status( 201 ).send({ newUser: dbResponse });
+                    response.status( 201 ).send({ message: 'User Created Successfully' });
                 });
             });
         };
@@ -25,7 +25,6 @@ router.post('/register', ( request, response ) => {
 router.post('/login', ( request, response ) => {
     User.findOne({ email: request.body.email }).then( dbResponse => {
         if( !dbResponse ){
-            console.log('Email does not exist')
             return response.status( 404 ).send({ error: 'Email does not exist' });
         }
         bcrypt.compare( request.body.password, dbResponse.password ).then( isValid => {
@@ -34,7 +33,12 @@ router.post('/login', ( request, response ) => {
             }else{
                 //create token
                 const token = jwt.sign({ id: dbResponse._id, email: dbResponse.email }, SECRET );
-                response.status( 200 ).send({ message: 'Login Successful', token: token, usertype: dbResponse.usertype, id: dbResponse.id, email: dbResponse.email });
+                const userDetails = {
+                    usertype: dbResponse.usertype, 
+                    id: dbResponse._id, 
+                    email: dbResponse.email
+                }
+                response.status( 200 ).send({ message: 'Login Successful', token: token, userDetails: userDetails });
             };
         });
     });
