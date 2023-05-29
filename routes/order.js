@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const Order = require('../models/OrderModel');
-const moment = require('moment');
+const User = require('../models/UserModel');
 
 // GET REQUESTS
 
@@ -9,22 +9,22 @@ const moment = require('moment');
 router.get('/', (request, response) => {
     Order.find().then(dbResponse => {
         response.status( 200 ).send({ orders: dbResponse });
-    });
+    })
 });
 
 //show the order using id
 // api/v1/orders/:orderId
 router.get('/:orderId', (request, response) => {
-    Order.find({ _id : request.params.orderId }).then(dbResponse => {
-        response.status( 200 ).send({ orders: dbResponse });
+    Order.findOne({ _id : request.params.orderId }).then(dbResponse => {
+        response.status( 200 ).send({ order: dbResponse });
     });
 });
 
 // POST REQUESTS
 
 // add new order
-// api/v1/orders/placed
-router.post('/placed', (request, response) => {
+// api/v1/orders/
+router.post('/', (request, response) => {
 
     const {
         customerName,
@@ -44,12 +44,32 @@ router.post('/placed', (request, response) => {
         sellerId: sellerId,
         orderedProducts: orderedProducts,
         typeOfPayment: typeOfPayment,
-        dateOrdered: moment().format('MMM DD YYYY, h:mm:ss a'),
-        status: 'Order Placed'
+        status: [{
+            label: 'Order Placed'
+        }]
     });
 
     newOrder.save().then( data => {
-        response.status( 201 ).send({  message: "Order created" });
+        response.status( 201 ).send({  message: "Order created", orderId: data._id });
+    })
+});
+
+// updates the order status
+// api/v1/orders/:orderId
+router.post('/:orderId', (request, response) => {
+    Order.updateOne(
+        { _id : request.params.orderId },
+        {
+            $push: {
+                status: {
+                    $each: [{label: request.body.label}],
+                    $position: 0
+                }
+            }
+        }
+    )
+    .then(dbResponse => {
+        response.status( 200 ).send({ message: dbResponse });
     });
 });
     

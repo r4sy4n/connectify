@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const OrderSchema = mongoose.Schema({
     customerName: String,
@@ -18,8 +19,14 @@ const OrderSchema = mongoose.Schema({
         _id: false
     }],
     typeOfPayment: String,
-    dateOrdered: String,
-    status: String
+    status: [{
+        label: String,
+        date: {
+            type: String,
+            default: moment().format('MMM DD YYYY, h:mm:ss a')
+        },
+        _id: false
+    }]
 });
 
 module.exports = mongoose.model( 'Order', OrderSchema );
