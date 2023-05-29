@@ -17,7 +17,7 @@ const OrderSchema = mongoose.Schema({
         quantity: Number
     }],
     typeOfPayment: String,
-    date: String,
+    dateOrdered: String,
     status: String
 });
 
