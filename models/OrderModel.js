@@ -14,7 +14,8 @@ const OrderSchema = mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product"
         },
-        quantity: Number
+        quantity: Number,
+        _id: false
     }],
     typeOfPayment: String,
     dateOrdered: String,
