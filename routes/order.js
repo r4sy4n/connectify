@@ -18,15 +18,5 @@ router.get('/:orderId', (request, response) => {
         response.status( 200 ).send({ orders: dbResponse });
     });
 });
-
-// POST REQUESTS
-
-// add order
-// api/v1/orders/:userId/orderList
-router.post('/:userId/orderList', (request, response) => {
-    Order.find({ _id : request.params.userId }).then(dbResponse => {
-        response.status( 200 ).send({ orderList: dbResponse.orderList });
-    });
-});
     
 module.exports = router;
