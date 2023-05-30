@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Product = require('../models/ProductModel');
-const { error } = require('console');
 
 
 // GET Endpoints
 
-// Display all products
+// Display not deleted products
 // /api/v1/products
 router.get( '/', ( request, response ) => {
-    Product.find().then(dbResponse => {
+    Product.find( { isDeleted: false } ).then(dbResponse => {
         response.status( 200 ).send( { products: dbResponse });
     })
 });
@@ -106,10 +105,10 @@ router.put( '/:productId', ( request, response ) => {
 router.delete( '/:productId', ( request, response ) => {
     const productId = request.params.productId;
 
-    Product.findByIdAndRemove( productId )
+    Product.findByIdAndUpdate( productId, { isDeleted:true } )
         .then( deletedProduct => {
             if ( deletedProduct ) {
-                response.status( 200 ).send( { message: 'Product deleted successfully' } );
+                response.status( 200 ).send( { message: 'Product soft deleted' } );
             } else {
                 response.status( 404 ).send( { error: 'Product not found' } );
             }
