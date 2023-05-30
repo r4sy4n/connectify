@@ -7,7 +7,7 @@ const User = require('../models/UserModel');
 // show all orders
 // api/v1/orders
 router.get('/', (request, response) => {
-    Order.find().then(dbResponse => {
+    Order.find().populate('sellerId orderedProducts.productId').then(dbResponse => {
         response.status( 200 ).send({ orders: dbResponse });
     })
 });
@@ -15,7 +15,7 @@ router.get('/', (request, response) => {
 //show the order using id
 // api/v1/orders/:orderId
 router.get('/:orderId', (request, response) => {
-    Order.findOne({ _id : request.params.orderId }).then(dbResponse => {
+    Order.findOne({ _id : request.params.orderId }).populate('sellerId orderedProducts.productId').then(dbResponse => {
         response.status( 200 ).send({ order: dbResponse });
     });
 });
@@ -54,9 +54,11 @@ router.post('/', (request, response) => {
     })
 });
 
+// PUT REQUESTS
+
 // updates the order status
 // api/v1/orders/:orderId
-router.post('/:orderId', (request, response) => {
+router.put('/:orderId', (request, response) => {
     Order.updateOne(
         { _id : request.params.orderId },
         {
