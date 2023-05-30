@@ -23,11 +23,8 @@ const UserSchema = mongoose.Schema({
         _id: false
     }],
     orderList: [{
-        orderId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product'
-        },
-        _id: false
     }],
     userType: String,
 });
