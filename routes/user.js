@@ -111,9 +111,12 @@ router.post('/login', ( request, response ) => {
     });
 });
 
+
+// PUT REQUESTS
+
 // change user info
 // api/v1/users/:userId
-router.post('/:userId', (request, response) => {
+router.put('/:userId', (request, response) => {
     const {
         username,
         password,
@@ -127,27 +130,32 @@ router.post('/:userId', (request, response) => {
         shopLogo
     } = request.body
 
-    bcrypt.hash( password, 10 ).then((hash, err) => {
+    let hashedPassword;
 
-        User.updateOne(
-            { _id : request.params.userId },
-            { 
-                username: username,
-                password: hash,
-                firstName: firstName,
-                lastName: lastName,
-                email: email,
-                phone: phone,
-                image: image,
-                shopName: shopName,
-                shopURL: shopURL,
-                shopLogo: shopLogo
-             }
-        )
-        .then(dbResponse => {
-            response.status( 200 ).send({ message: 'Update Success' });
-        });
-    })
+    if(password) {
+        bcrypt.hash( password, 10 ).then((hash, err) => {
+            hashedPassword = hash;
+        })
+    }
+
+    User.updateOne(
+        { _id : request.params.userId },
+        { 
+            username: username,
+            password: hashedPassword,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            image: image,
+            shopName: shopName,
+            shopURL: shopURL,
+            shopLogo: shopLogo
+            }
+    )
+    .then(dbResponse => {
+        response.status( 200 ).send({ message: 'Update Success', dbResponse });
+    });
 });
 
 module.exports = router;
