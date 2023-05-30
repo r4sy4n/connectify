@@ -14,7 +14,7 @@ mongoose.connect(`mongodb+srv://${ process.env.MONGODB_ACCOUNT }@connectify.rnfm
 //Routes
 const OrderRoutes = require('./routes/order');
 const authRoutes = require('./routes/authRoutes');
-const ProductRoutes = require('./routes/ProductRoutes')
+const ProductRoutes = require('./routes/productRoutes')
 
 const server = express();
 server.use( bodyParser.json() );
