@@ -30,7 +30,7 @@ router.get('/:userId', (request, response) => {
 });
 
 // get order list
-// api/v1/users/:userId/orderList
+// api/v1/users/:userId/order-list
 router.get('/:userId/order-list', (request, response) => {
     User.findOne({ _id : request.params.userId }).then(dbResponse => {
         if (dbResponse.orderList.length !== 0) {
@@ -43,7 +43,7 @@ router.get('/:userId/order-list', (request, response) => {
 });
 
 // get product list
-// api/v1/users/:userId/productList
+// api/v1/users/:userId/product-list
 router.get('/:userId/product-list', (request, response) => {
     User.findOne({ _id : request.params.userId }).then(dbResponse => {
         if (dbResponse.productList.length !== 0) {
@@ -159,7 +159,7 @@ router.put('/:userId', (request, response) => {
 });
 
 // add/remove products
-// api/v1/users/:userId/productList
+// api/v1/users/:userId/product-list
 router.put('/:userId/product-list', (request, response) => {
     const userId = request.params.userId;
     const {
