@@ -101,7 +101,7 @@ router.put( '/:productId', ( request, response ) => {
 
 // DELETE Endpoint
 
-// Delete product by id
+// Soft delete product by id
 router.delete( '/:productId', ( request, response ) => {
     const productId = request.params.productId;
 
