@@ -90,7 +90,7 @@ router.post('/register', ( request, response ) => {
 // login user
 // api/v1/users/login
 router.post('/login', ( request, response ) => {
-    User.findOne({ email: request.body.email }).then( dbResponse => {
+    User.findOne({ email: request.body.email }).select('+password').then( dbResponse => {
         if( !dbResponse ){
             return response.status( 404 ).send({ error: 'Email does not exist' });
         }
