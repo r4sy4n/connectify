@@ -3,8 +3,6 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const SECRET = process.env.SECRET;
 
 // GET REQUESTS
 
@@ -21,7 +19,7 @@ router.get('/', (request, response) => {
 router.get('/:userId', (request, response) => {
     User.findOne({ _id: request.params.userId }).then(dbResponse => {
         if (dbResponse) {
-            response.status( 200 ).send({ users: dbResponse });
+            response.status( 200 ).send({ user: dbResponse });
         }
         else {
             response.status( 404 ).send({ error: "User Does Not Exist" });
@@ -32,7 +30,7 @@ router.get('/:userId', (request, response) => {
 // get order list
 // api/v1/users/:userId/order-list
 router.get('/:userId/order-list', (request, response) => {
-    User.findOne({ _id : request.params.userId }).then(dbResponse => {
+    User.findOne({ _id : request.params.userId }).populate('orderList.orderId').then(dbResponse => {
         if (dbResponse.orderList.length !== 0) {
             response.status( 200 ).send({ orderList: dbResponse.orderList });
         }
@@ -45,69 +43,13 @@ router.get('/:userId/order-list', (request, response) => {
 // get product list
 // api/v1/users/:userId/product-list
 router.get('/:userId/product-list', (request, response) => {
-    User.findOne({ _id : request.params.userId }).then(dbResponse => {
+    User.findOne({ _id : request.params.userId }).populate('productList.productId').then(dbResponse => {
         if (dbResponse.productList.length !== 0) {
             response.status( 200 ).send({ productList: dbResponse.productList });
         }
         else {
             response.status( 204 ).send({ message: "Empty" });
         }
-    });
-});
-
-
-// POST REQUESTS
-
-// create user
-// api/v1/users/register
-router.post('/register', ( request, response ) => {
-    User.find({ $or: [ { username: request.body.username }, { email: request.body.email } ]}).then(dbResponse => {
-        if( dbResponse.length > 0 ){
-            response.status( 400 ).send({ error: 'Please use unique username or email' });
-        }else{
-             bcrypt.hash( request.body.password, 10 ).then((hash, err) => {
-                const newUser = new User({
-                    username: request.body.username,
-                    password: hash,
-                    email: request.body.email,
-                    firstName: request.body.firstName,
-                    lastName: request.body.lastName,
-                    phone: request.body.phone,
-                    image: '',
-                    productList: [],
-                    orderList: [],
-                    usertype: request.body.usertype 
-                });
-
-                newUser.save().then( dbResponse => {
-                    response.status( 201 ).send({ message: 'User Created Successfully' });
-                });
-            });
-        };
-    })
-});
-
-// login user
-// api/v1/users/login
-router.post('/login', ( request, response ) => {
-    User.findOne({ email: request.body.email }).select('+password').then( dbResponse => {
-        if( !dbResponse ){
-            return response.status( 404 ).send({ error: 'Email does not exist' });
-        }
-        bcrypt.compare( request.body.password, dbResponse.password ).then( isValid => {
-            if( !isValid ){
-                response.status( 400 ).send({ error: 'Please enter correct email or password!' });
-            }else{
-                //create token
-                const token = jwt.sign({ id: dbResponse._id, email: dbResponse.email }, SECRET );
-                const userDetails = {
-                    usertype: dbResponse.usertype, 
-                    id: dbResponse._id, 
-                    email: dbResponse.email
-                }
-                response.status( 200 ).send({ message: 'Login Successful', token: token, userDetails: userDetails });
-            };
-        });
     });
 });
 
