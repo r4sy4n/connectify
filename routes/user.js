@@ -154,7 +154,57 @@ router.put('/:userId', (request, response) => {
             }
     )
     .then(dbResponse => {
-        response.status( 200 ).send({ message: 'Update Success', dbResponse });
+        response.status( 200 ).send({ message: 'Update Success' });
+    });
+});
+
+// add/remove products
+// api/v1/users/:userId/productList
+router.put('/:userId/product-list', (request, response) => {
+    const userId = request.params.userId;
+    const {
+        type,
+        productId,
+        productName,
+        productDescription,
+        productPrice,
+        productImage
+    } = request.body;
+    let value;
+
+    //will add the userId to the list of the user Reading the book
+    if( type === 'add' ) {
+        value = {
+            $addToSet: {
+                productList: {
+                    productId: productId,
+                    productName: productName,
+                    productDescription: productDescription,
+                    productPrice: productPrice,
+                    productImage: productImage,
+                }
+            }
+        }
+    }
+
+    //will remove the user from the list of the users Reading the book
+    else if( type === 'remove' ) {
+        value = {
+            $pull: {
+                productList: {
+                    productId: productId
+                }
+            }
+        }
+    }
+
+    //update the book with the specific id
+    User.updateOne( 
+        { _id: userId },
+        value
+    )
+    .then( dbResponse => {
+        response.status( 200 ).send({ message: 'Success', dbResponse });
     });
 });
 
