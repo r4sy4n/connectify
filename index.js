@@ -14,6 +14,7 @@ mongoose.connect(`mongodb+srv://${ process.env.MONGODB_ACCOUNT }@connectify.rnfm
 //Routes
 const OrderRoutes = require('./routes/order');
 const UserRoutes = require('./routes/user');
+const AuthRoutes = require('./routes/authRoutes');
 
 const server = express();
 server.use( bodyParser.json() );
@@ -30,5 +31,6 @@ server.get('/', ( request, response ) => {
 
 server.use( `${baseURL}/orders`, OrderRoutes );
 server.use( `${baseURL}/users`, UserRoutes );
+server.use( `${baseURL}/auth`, AuthRoutes  )
 
 server.listen( PORT, () => { console.log( `Server currently running on port ${PORT}` ) });
