@@ -30,8 +30,8 @@ router.get('/:userId', (request, response) => {
 // get order list
 // api/v1/users/:userId/order-list
 router.get('/:userId/order-list', (request, response) => {
-    User.findOne({ _id : request.params.userId }).populate('orderList.orderId').then(dbResponse => {
-        if (dbResponse.orderList.length !== 0) {
+    User.findOne({ _id : request.params.userId }).populate('orderList').then(dbResponse => {
+        if (dbResponse.orderList !== 0) {
             response.status( 200 ).send({ orderList: dbResponse.orderList });
         }
         else {
@@ -144,6 +144,26 @@ router.put('/:userId/product-list', (request, response) => {
     User.updateOne( 
         { _id: userId },
         value
+    )
+    .then( dbResponse => {
+        response.status( 200 ).send({ message: 'Success', dbResponse });
+    });
+});
+
+// add orders
+// api/v1/users/:userId/order-list
+router.put('/:userId/order-list', (request, response) => {
+    const userId = request.params.userId;
+    const orderId = request.body.orderId;
+
+    //update the book with the specific id
+    User.updateOne( 
+        { _id: userId },
+        {
+            $push: {
+                orderList: orderId
+            }
+        }
     )
     .then( dbResponse => {
         response.status( 200 ).send({ message: 'Success', dbResponse });
