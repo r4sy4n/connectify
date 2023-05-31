@@ -5,14 +5,29 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const SECRET = process.env.SECRET;
 
-//POST Endpoint to create user
+
+
+// create user
+// api/v1/users/register
 router.post('/register', ( request, response ) => {
     User.find({ $or: [ { username: request.body.username }, { email: request.body.email } ]}).then(dbResponse => {
         if( dbResponse.length > 0 ){
             response.status( 400 ).send({ error: 'Please use unique username or email' });
         }else{
              bcrypt.hash( request.body.password, 10 ).then((hash, err) => {
-                const newUser = new User({ username: request.body.username, email: request.body.email, firstname: request.body.username, lastname: request.body.lastname, phone: request.body.phone, password: hash, usertype: request.body.usertype });
+                const newUser = new User({
+                    username: request.body.username,
+                    password: hash,
+                    email: request.body.email,
+                    firstName: request.body.firstName,
+                    lastName: request.body.lastName,
+                    phone: request.body.phone,
+                    image: '',
+                    productList: [],
+                    orderList: [],
+                    usertype: request.body.usertype 
+                });
+
                 newUser.save().then( dbResponse => {
                     response.status( 201 ).send({ message: 'User Created Successfully' });
                 });
@@ -21,9 +36,10 @@ router.post('/register', ( request, response ) => {
     })
 });
 
-//POST Endpoint to login user
+// login user
+// api/v1/users/login
 router.post('/login', ( request, response ) => {
-    User.findOne({ email: request.body.email }).then( dbResponse => {
+    User.findOne({ email: request.body.email }).select('+password').then( dbResponse => {
         if( !dbResponse ){
             return response.status( 404 ).send({ error: 'Email does not exist' });
         }

@@ -13,7 +13,8 @@ mongoose.connect(`mongodb+srv://${ process.env.MONGODB_ACCOUNT }@connectify.rnfm
 
 //Routes
 const OrderRoutes = require('./routes/order');
-const authRoutes = require('./routes/authRoutes');
+const UserRoutes = require('./routes/user');
+const AuthRoutes = require('./routes/authRoutes');
 const ProductRoutes = require('./routes/productRoutes')
 
 const server = express();
@@ -24,13 +25,13 @@ server.use( helmet() );
 //morgan
 server.use( morgan('dev') );
 
-server.use( `${baseURL}/auth`, authRoutes );
-
 server.get('/', ( request, response ) => {
     response.status(200).send( `Welcome to Connectify App` );
 });
 
 server.use( `${baseURL}/orders`, OrderRoutes );
+server.use( `${baseURL}/users`, UserRoutes );
+server.use( `${baseURL}/auth`, AuthRoutes  );
 server.use( `${baseURL}/products`, ProductRoutes );
 
 server.listen( PORT, () => { console.log( `Server currently running on port ${PORT}` ) });
