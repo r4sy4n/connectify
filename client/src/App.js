@@ -30,16 +30,16 @@ const App = () => {
       <Routes>
         <Route path='supplier' element={ <SharedLayout/> }>
           <Route index element={ <SupplierDashboard/> } />
-          <Route path='suppliermanageproducts' element={ <SupplierManageProducts/> } />
-          <Route path='supplierprofile' element={ <SupplierProfile/> } />
+          <Route path='manage' element={ <SupplierManageProducts/> } />
+          <Route path='profile' element={ <SupplierProfile/> } />
         </Route>
         <Route path='seller' element={ <SharedLayout/> }>
           <Route index element={ <SellerDashboard/> } />
-          <Route path='sellermanageproducts' element={ <SellerManageProducts/> } />
-          <Route path='sellerprofile' element={ <SellerProfile/> } />
-          <Route path='webpage' element={ <WebsitePage/> } />
-          <Route path='webpage/productlist' element={ <ProductList/> } />
-          <Route path='webpage/checkout' element={ <CheckOutPage/> } />
+          <Route path='manage' element={ <SellerManageProducts/> } />
+          <Route path='profile' element={ <SellerProfile/> } />
+          <Route path=':usershopname' element={ <WebsitePage/> } />
+          <Route path=':usershopname/productlist' element={ <ProductList/> } />
+          <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
         </Route>
         <Route path='/' element={ <LandingPage/> } />
         <Route path='register' element={ <LoginRegister/> } />
