@@ -34,7 +34,7 @@ router.get( '/:productId', ( request, response ) => {
 
 // Upload new product
 router.post( '/', ( request, response ) => {
-    const { name, price, description, stock, variation, catalog, sellers } = request.body;
+    const { name, price, description, stock, variation, catalog, sellers, isDeleted } = request.body;
 
     if ( !name || !price || !description || !stock ) {
         return response.status( 400 ).send( { error: 'Missing required fields' } );
@@ -51,7 +51,8 @@ router.post( '/', ( request, response ) => {
         stock,
         variation,
         catalog,
-        sellers
+        sellers,
+        isDeleted: false
     });
 
     newProduct.save()
