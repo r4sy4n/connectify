@@ -17,7 +17,7 @@ router.get('/', (request, response) => {
 // get a specific users
 // api/v1/users/:userId
 router.get('/:userId', (request, response) => {
-    User.findOne({ _id: request.params.userId }).populate('productList.productId orderList').then(dbResponse => {
+    User.findOne({ _id: request.params.userId }).then(dbResponse => {
         if (dbResponse) {
             response.status( 200 ).send({ user: dbResponse });
         }
