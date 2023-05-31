@@ -72,7 +72,7 @@ router.post( '/', ( request, response ) => {
 // update product by id
 router.put( '/:productId', ( request, response ) => {
     const productId = request.params.productId;
-    const { name, price, description, stock, variation, catalog, sellers } = request.body;
+    const { name, price, description, stock, variation, catalog, sellers, isDeleted } = request.body;
 
     const updatedProduct = {
         name,
@@ -81,7 +81,8 @@ router.put( '/:productId', ( request, response ) => {
         stock,
         variation,
         catalog,
-        sellers
+        sellers,
+        isDeleted
     };
 
     Product.findByIdAndUpdate( productId, updatedProduct, { new: true } )
