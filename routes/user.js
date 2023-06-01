@@ -194,10 +194,15 @@ router.put('/:userId/:productId', upload.any(), (request, response) => {
                             productName: productName,
                             productDescription: productDescription,
                             productPrice: productPrice,
-                            productImage: {
-                                url: data.url,
-                                public_id: data.public_id
-                            },
+                            $push: {
+                                productImage: {
+                                    $each: [{
+                                        url: data.url, // image url from cloudinary
+                                        public_id: data.public_id // unique id of the image
+                                    }],
+                                    $position: 0
+                                },
+                            }
                         }
                     }
                 }
