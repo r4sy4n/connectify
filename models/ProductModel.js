@@ -8,16 +8,16 @@ const ProductSchema = mongoose.Schema({
     stock: Number,
     catalog: String,
 
-    variation: {
-        type: [String],
+    variation: [{
+        type: String,
         default: []
-    },
+    }],
 
-    sellers: {
-        type: [mongoose.Schema.Types.ObjectId],
+    sellers: [{
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Seller',
         default: []
-    },
+    }],
  
     isDeleted: {
         type: Boolean,
