@@ -24,7 +24,7 @@ const UserSchema = mongoose.Schema({
     }],
     orderList: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product'
+            ref: 'Order'
     }],
     userType: String,
 });
