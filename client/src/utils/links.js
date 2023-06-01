@@ -1,44 +1,37 @@
 import {CgProfile} from 'react-icons/cg';
 import {MdProductionQuantityLimits} from 'react-icons/md';
 import {MdOutlineInventory2} from 'react-icons/md';
-import {FiSettings} from 'react-icons/fi';
-import {CgLogOut} from 'react-icons/cg';
+import {LuLayoutDashboard} from 'react-icons/lu';
 
 const links = [
     {
         id: 1,
-        text: 'Seller',
-        path: 'seller/profile',
-        icon: <CgProfile/>,
+        text: 'Stats',
+        path: 'seller',
+        icon: <LuLayoutDashboard/>,
     },
     {
         id: 2,
-        text: 'Supplier',
-        path: 'supplier/profile',
+        text: 'Seller',
+        path: 'profile',
         icon: <CgProfile/>,
     },
     {
         id: 3,
-        text: 'Orders',
-        path: 'seller/orders',
-        icon: <MdProductionQuantityLimits/>,
+        text: 'Supplier',
+        path: 'profile',
+        icon: <CgProfile/>,
     },
     {
         id: 4,
         text: 'Orders',
-        path: 'supplier/orders',
+        path: 'orders',
         icon: <MdProductionQuantityLimits/>,
     },
     {
         id: 5,
         text: 'Products',
-        path: 'seller/manage',
-        icon: <MdOutlineInventory2/>,
-    },
-    {
-        id: 6,
-        text: 'Products',
-        path: 'supplier/manage',
+        path: 'manage',
         icon: <MdOutlineInventory2/>,
     },
 ]

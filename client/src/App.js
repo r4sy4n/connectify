@@ -35,7 +35,7 @@ const App = () => {
           <Route path='manage' element={ <SupplierManageProducts/> } />
           <Route path='profile' element={ <SupplierProfile/> } />
           <Route path='orders' element={ <SupplierOrders/> } />
-
+          <Route path='settings' element={ <Settings/> } />
         </Route>
         <Route path='seller' element={ <SharedLayout/> }>
           <Route index element={ <SellerDashboard/> } />
@@ -45,6 +45,7 @@ const App = () => {
           <Route path=':usershopname' element={ <WebsitePage/> } />
           <Route path=':usershopname/productlist' element={ <ProductList/> } />
           <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
+          <Route path='settings' element={ <Settings/> } />
         </Route>
         <Route path='/' element={ <LandingPage/> } />
         <Route path='register' element={ <LoginRegister/> } />
