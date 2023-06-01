@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
+const upload = require('../middlewares/upload')
+const { uploadFiles, removeFiles } = require('../services/cloudinary');
 
 // GET REQUESTS
 
@@ -58,7 +60,8 @@ router.get('/:userId/product-list', (request, response) => {
 
 // change user info
 // api/v1/users/:userId
-router.put('/:userId', (request, response) => {
+router.put('/:userId', upload.single('userImage'), (request, response) => {
+
     const {
         username,
         password,
@@ -66,38 +69,57 @@ router.put('/:userId', (request, response) => {
         lastName,
         email,
         phone,
-        image,
         shopName,
         shopURL,
         shopLogo
     } = request.body
 
     let hashedPassword;
+    
+    // find the user that will have the information updated
+    User.findOne({ _id: request.params.userId }).then(dbResponse => {
 
-    if(password) {
-        bcrypt.hash( password, 10 ).then((hash, err) => {
-            hashedPassword = hash;
-        })
-    }
+        //specify the image that will be uploaded and where it will be saved in Cloudinary
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
 
-    User.updateOne(
-        { _id : request.params.userId },
-        { 
-            username: username,
-            password: hashedPassword,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            image: image,
-            shopName: shopName,
-            shopURL: shopURL,
-            shopLogo: shopLogo
+            if(password) {
+                bcrypt.hash( password, 10 ).then((hash, err) => {
+                    hashedPassword = hash;
+                })
             }
-    )
-    .then(dbResponse => {
-        response.status( 200 ).send({ message: 'Update Success' });
-    });
+
+            User.updateOne(
+                { _id : request.params.userId },
+                { 
+                    username: username,
+                    password: hashedPassword,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    $push: {
+                        image: {
+                            $each: [{
+                                url: data.url, // image url from cloudinary
+                                public_id: data.public_id // unique id of the image
+                            }],
+                            $position: 0
+                        },
+                    },
+                    shopName: shopName,
+                    shopURL: shopURL,
+                    shopLogo: shopLogo
+                    }
+            )
+            .then(dbResponse => {
+                response.status( 200 ).send({ message: 'Update Success' });
+            })
+            .catch((error) => {
+                response.status( 500 ).send({ message: 'Server Error' });
+            })
+        
+        })
+    })
 });
 
 // add/remove products
@@ -106,35 +128,31 @@ router.put('/:userId/product-list', (request, response) => {
     const userId = request.params.userId;
     const {
         type,
-        productId,
-        productName,
-        productDescription,
-        productPrice,
-        productImage
+        product
     } = request.body;
     let value;
 
-    //will add the userId to the list of the user Reading the book
+    //will add the product to the user's product list
     if( type === 'add' ) {
         value = {
             $addToSet: {
                 productList: {
-                    productId: productId,
-                    productName: productName,
-                    productDescription: productDescription,
-                    productPrice: productPrice,
-                    productImage: productImage,
+                    productId: product.productId,
+                    productName: product.productName,
+                    productDescription: product.productDescription,
+                    productPrice: product.productPrice,
+                    productImage: product.productImage,
                 }
             }
         }
     }
 
-    //will remove the user from the list of the users Reading the book
+    //will remove the product to the user's product list
     else if( type === 'remove' ) {
         value = {
             $pull: {
                 productList: {
-                    productId: productId
+                    productId: product.productId
                 }
             }
         }
@@ -147,6 +165,55 @@ router.put('/:userId/product-list', (request, response) => {
     )
     .then( dbResponse => {
         response.status( 200 ).send({ message: 'Success', dbResponse });
+    });
+});
+
+// change user's product info
+// api/v1/users/:userId/:productId
+router.put('/:userId/:productId', upload.any(), (request, response) => {
+    const { userId, productId } = request.params;
+    const {
+        productName,
+        productDescription,
+        productPrice
+    } = request.body;
+    
+    // find the user that will have the information updated
+    User.findOne({ _id: userId }).then(dbResponse => {
+
+        //specify the image that will be uploaded and where it will be saved in Cloudinary
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
+
+            //update the product in the user's product list
+            User.updateOne( 
+                { _id: userId },
+                {
+                    $set: {
+                        productList: {
+                            productId: productId,
+                            productName: productName,
+                            productDescription: productDescription,
+                            productPrice: productPrice,
+                            $push: {
+                                productImage: {
+                                    $each: [{
+                                        url: data.url, // image url from cloudinary
+                                        public_id: data.public_id // unique id of the image
+                                    }],
+                                    $position: 0
+                                },
+                            }
+                        }
+                    }
+                }
+            )
+            .then( dbResponse => {
+                response.status( 200 ).send({ message: 'Success' });
+            })
+            .catch((error) => {
+                response.status( 500 ).send({ message: 'Server Error' });
+            })
+        });
     });
 });
 
@@ -167,7 +234,10 @@ router.put('/:userId/order-list', (request, response) => {
     )
     .then( dbResponse => {
         response.status( 200 ).send({ message: 'Success', dbResponse });
-    });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
+    })
 });
 
 module.exports = router;
