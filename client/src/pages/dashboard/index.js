@@ -9,6 +9,8 @@ import SupplierDashboard from './SupplierDashboard';
 import SupplierManageProducts from './SupplierManageProducts';
 import SupplierProfile from './SupplierProfile';
 import WebsitePage from './WebsitePage';
+import SellerOrders from './SellerOrders';
+import SupplierOrders from './SupplierOrders';
 
 export {
     CheckOutPage,
@@ -21,5 +23,7 @@ export {
     SupplierDashboard,
     SupplierManageProducts,
     SupplierProfile,
-    WebsitePage
+    WebsitePage,
+    SellerOrders,
+    SupplierOrders
 };

@@ -18,7 +18,9 @@ import {
     SupplierDashboard,
     SupplierManageProducts,
     SupplierProfile,
-    WebsitePage
+    WebsitePage,
+    SellerOrders,
+    SupplierOrders
 } from './pages/dashboard';
 
 const App = () => {
@@ -32,11 +34,14 @@ const App = () => {
           <Route index element={ <SupplierDashboard/> } />
           <Route path='manage' element={ <SupplierManageProducts/> } />
           <Route path='profile' element={ <SupplierProfile/> } />
+          <Route path='orders' element={ <SupplierOrders/> } />
+
         </Route>
         <Route path='seller' element={ <SharedLayout/> }>
           <Route index element={ <SellerDashboard/> } />
           <Route path='manage' element={ <SellerManageProducts/> } />
           <Route path='profile' element={ <SellerProfile/> } />
+          <Route path='orders' element={ <SellerOrders/> } />
           <Route path=':usershopname' element={ <WebsitePage/> } />
           <Route path=':usershopname/productlist' element={ <ProductList/> } />
           <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
