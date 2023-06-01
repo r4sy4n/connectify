@@ -7,7 +7,11 @@ const UserSchema = mongoose.Schema({
     lastName: {type: String, required: true},
     email: {type: String, required: true},
     phone: {type: String, required: true},
-    image: String,
+    image: [{
+        url: String,
+        public_id: String,
+        _id: false
+    }],
     shopName: String,
     shopURL: String,
     shopLogo: String,

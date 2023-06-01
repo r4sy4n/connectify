@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/UserModel');
 const bcrypt = require('bcrypt');
+const upload = require('../middlewares/upload')
+const { uploadFiles, removeFiles } = require('../services/cloudinary');
 
 // GET REQUESTS
 
@@ -58,46 +60,59 @@ router.get('/:userId/product-list', (request, response) => {
 
 // change user info
 // api/v1/users/:userId
-router.put('/:userId', (request, response) => {
-    const {
-        username,
-        password,
-        firstName,
-        lastName,
-        email,
-        phone,
-        image,
-        shopName,
-        shopURL,
-        shopLogo
-    } = request.body
+router.put('/:userId', upload.single('userImage'), (request, response) => {
+    
+    User.findOne({ _id: request.params.userId }).then(dbResponse => {
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
+    
+            const {
+                username,
+                password,
+                firstName,
+                lastName,
+                email,
+                phone,
+                shopName,
+                shopURL,
+                shopLogo
+            } = request.body
 
-    let hashedPassword;
+            let hashedPassword;
 
-    if(password) {
-        bcrypt.hash( password, 10 ).then((hash, err) => {
-            hashedPassword = hash;
-        })
-    }
-
-    User.updateOne(
-        { _id : request.params.userId },
-        { 
-            username: username,
-            password: hashedPassword,
-            firstName: firstName,
-            lastName: lastName,
-            email: email,
-            phone: phone,
-            image: image,
-            shopName: shopName,
-            shopURL: shopURL,
-            shopLogo: shopLogo
+            if(password) {
+                bcrypt.hash( password, 10 ).then((hash, err) => {
+                    hashedPassword = hash;
+                })
             }
-    )
-    .then(dbResponse => {
-        response.status( 200 ).send({ message: 'Update Success' });
-    });
+
+            User.updateOne(
+                { _id : request.params.userId },
+                { 
+                    username: username,
+                    password: hashedPassword,
+                    firstName: firstName,
+                    lastName: lastName,
+                    email: email,
+                    phone: phone,
+                    image: [{
+                        url: data.url,
+                        public_id: data.public_id
+                    }],
+                    shopName: shopName,
+                    shopURL: shopURL,
+                    shopLogo: shopLogo
+                    }
+            )
+            .then(dbResponse => {
+                response.status( 200 ).send({ message: 'Update Success' });
+            })
+            .catch((error) => {
+                response.status( 500 ).send({ message: 'Server Error' });
+            })
+            console.log(data)
+        
+        })
+    })
 });
 
 // add/remove products
