@@ -117,7 +117,6 @@ router.put('/:userId', upload.single('userImage'), (request, response) => {
             .catch((error) => {
                 response.status( 500 ).send({ message: 'Server Error' });
             })
-            console.log(data)
         
         })
     })
@@ -169,6 +168,50 @@ router.put('/:userId/product-list', (request, response) => {
     });
 });
 
+// change user's product info
+// api/v1/users/:userId/:productId
+router.put('/:userId/:productId', upload.any(), (request, response) => {
+    const { userId, productId } = request.params;
+    const {
+        productName,
+        productDescription,
+        productPrice
+    } = request.body;
+    
+    // find the user that will have the information updated
+    User.findOne({ _id: userId }).then(dbResponse => {
+
+        //specify the image that will be uploaded and where it will be saved in Cloudinary
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
+
+            //update the product in the user's product list
+            User.updateOne( 
+                { _id: userId },
+                {
+                    $set: {
+                        productList: {
+                            productId: productId,
+                            productName: productName,
+                            productDescription: productDescription,
+                            productPrice: productPrice,
+                            productImage: {
+                                url: data.url,
+                                public_id: data.public_id
+                            },
+                        }
+                    }
+                }
+            )
+            .then( dbResponse => {
+                response.status( 200 ).send({ message: 'Success' });
+            })
+            .catch((error) => {
+                response.status( 500 ).send({ message: 'Server Error' });
+            })
+        });
+    });
+});
+
 // add orders
 // api/v1/users/:userId/order-list
 router.put('/:userId/order-list', (request, response) => {
@@ -186,7 +229,10 @@ router.put('/:userId/order-list', (request, response) => {
     )
     .then( dbResponse => {
         response.status( 200 ).send({ message: 'Success', dbResponse });
-    });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
+    })
 });
 
 module.exports = router;

@@ -23,7 +23,11 @@ const UserSchema = mongoose.Schema({
         productName: String,
         productDescription: String,
         productPrice: Number,
-        productImage: String,
+        productImage: [{
+            url: String,
+            public_id: String,
+            _id: false
+        }],
         _id: false
     }],
     orderList: [{
