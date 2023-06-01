@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const Order = require('../models/OrderModel');
-const User = require('../models/UserModel');
 
 // GET REQUESTS
 
