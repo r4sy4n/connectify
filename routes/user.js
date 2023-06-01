@@ -61,23 +61,26 @@ router.get('/:userId/product-list', (request, response) => {
 // change user info
 // api/v1/users/:userId
 router.put('/:userId', upload.single('userImage'), (request, response) => {
-    
-    User.findOne({ _id: request.params.userId }).then(dbResponse => {
-        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
-    
-            const {
-                username,
-                password,
-                firstName,
-                lastName,
-                email,
-                phone,
-                shopName,
-                shopURL,
-                shopLogo
-            } = request.body
 
-            let hashedPassword;
+    const {
+        username,
+        password,
+        firstName,
+        lastName,
+        email,
+        phone,
+        shopName,
+        shopURL,
+        shopLogo
+    } = request.body
+
+    let hashedPassword;
+    
+    // find the user that will have the information updated
+    User.findOne({ _id: request.params.userId }).then(dbResponse => {
+
+        //specify the image that will be uploaded and where it will be saved in Cloudinary
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
 
             if(password) {
                 bcrypt.hash( password, 10 ).then((hash, err) => {
@@ -94,10 +97,15 @@ router.put('/:userId', upload.single('userImage'), (request, response) => {
                     lastName: lastName,
                     email: email,
                     phone: phone,
-                    image: [{
-                        url: data.url,
-                        public_id: data.public_id
-                    }],
+                    $push: {
+                        image: {
+                            $each: [{
+                                url: data.url, // image url from cloudinary
+                                public_id: data.public_id // unique id of the image
+                            }],
+                            $position: 0
+                        },
+                    },
                     shopName: shopName,
                     shopURL: shopURL,
                     shopLogo: shopLogo
@@ -121,35 +129,31 @@ router.put('/:userId/product-list', (request, response) => {
     const userId = request.params.userId;
     const {
         type,
-        productId,
-        productName,
-        productDescription,
-        productPrice,
-        productImage
+        product
     } = request.body;
     let value;
 
-    //will add the userId to the list of the user Reading the book
+    //will add the product to the user's product list
     if( type === 'add' ) {
         value = {
             $addToSet: {
                 productList: {
-                    productId: productId,
-                    productName: productName,
-                    productDescription: productDescription,
-                    productPrice: productPrice,
-                    productImage: productImage,
+                    productId: product.productId,
+                    productName: product.productName,
+                    productDescription: product.productDescription,
+                    productPrice: product.productPrice,
+                    productImage: product.productImage,
                 }
             }
         }
     }
 
-    //will remove the user from the list of the users Reading the book
+    //will remove the product to the user's product list
     else if( type === 'remove' ) {
         value = {
             $pull: {
                 productList: {
-                    productId: productId
+                    productId: product.productId
                 }
             }
         }
