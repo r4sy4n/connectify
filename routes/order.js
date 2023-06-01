@@ -8,7 +8,7 @@ const Order = require('../models/OrderModel');
 router.get('/', (request, response) => {
     Order.find().populate('sellerId orderedProducts.productId').then(dbResponse => {
         response.status( 200 ).send({ orders: dbResponse });
-    })
+    });
 });
 
 //show the order using id
@@ -36,13 +36,13 @@ router.post('/', (request, response) => {
     } = request.body
 
     const newOrder    = new Order({
-        customerName: customerName,
-        customerAddress: customerAddress,
-        customerNumber: customerNumber,
-        customerEmail: customerEmail,
-        sellerId: sellerId,
-        orderedProducts: orderedProducts,
-        typeOfPayment: typeOfPayment,
+        customerName,
+        customerAddress,
+        customerNumber,
+        customerEmail,
+        sellerId,
+        orderedProducts,
+        typeOfPayment,
         status: [{
             label: 'Order Placed'
         }]
