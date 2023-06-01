@@ -13,6 +13,9 @@ const { uploadFiles, removeFiles } = require('../services/cloudinary');
 router.get('/', (request, response) => {
     User.find().then(dbResponse => {
         response.status( 200 ).send({ users: dbResponse });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 
@@ -26,6 +29,9 @@ router.get('/:userId', (request, response) => {
         else {
             response.status( 404 ).send({ error: "User Does Not Exist" });
         }
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 
@@ -39,6 +45,9 @@ router.get('/:userId/order-list', (request, response) => {
         else {
             response.status( 204 ).send({ message: "Empty" });
         }
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 
@@ -52,6 +61,9 @@ router.get('/:userId/product-list', (request, response) => {
         else {
             response.status( 204 ).send({ message: "Empty" });
         }
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 
@@ -101,7 +113,7 @@ router.put('/:userId', (request, response) => {
     })
     .catch((error) => {
         response.status( 500 ).send({ message: 'Server Error' });
-    })
+    });
 });
 
 // change user image
@@ -181,13 +193,16 @@ router.put('/:userId/product-list', (request, response) => {
         value
     )
     .then( dbResponse => {
-        response.status( 200 ).send({ message: 'Success', dbResponse });
+        response.status( 200 ).send({ message: 'Success' });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 
 // change user's product info
 // api/v1/users/:userId/:productId
-router.put('/:userId/:productId', upload.single('productImages'), (request, response) => {
+router.put('/:userId/:productId', (request, response) => {
     const { userId, productId } = request.params;
     const {
         productName,
@@ -218,14 +233,14 @@ router.put('/:userId/:productId', upload.single('productImages'), (request, resp
             })
             .catch((error) => {
                 response.status( 500 ).send({ message: 'Server Error' });
-            })
+            });
         });
     });
 });
 
 // change product image
 // api/v1/users/:userId/:productId/images
-router.put('/:userId/:productId/images', upload.single('productImages'), (request, response) => {
+router.put('/:userId/:productId/images', upload.any(), (request, response) => {
 
     const { userId, productId } = request.params
 
@@ -255,12 +270,12 @@ router.put('/:userId/:productId/images', upload.single('productImages'), (reques
                 }
             )
             .then(dbResponse => {
-                response.status( 200 ).send({ message: 'Upload Success', dbResponse });
+                response.status( 200 ).send({ message: 'Upload Success' });
             })
             .catch((error) => {
                 response.status( 500 ).send({ message: 'Server Error' });
                 console.log(error)
-            })
+            });
         })
 
     })
@@ -282,10 +297,73 @@ router.put('/:userId/order-list', (request, response) => {
         }
     )
     .then( dbResponse => {
-        response.status( 200 ).send({ message: 'Success', dbResponse });
+        response.status( 200 ).send({ message: 'Success' });
     })
     .catch((error) => {
         response.status( 500 ).send({ message: 'Server Error' });
+    });
+});
+
+// DELETE REQUEST
+
+// remove profile images
+// api/v1/users/:userId/profile-image
+router.delete('/:userId/profile-image', (request, response) => {
+    const { userId } = request.params;
+
+    // delete image in cloudinary
+    removeFiles(request.body.public_id).then(() => {
+
+        //delete the image in the database
+        User.updateOne( 
+            { _id: userId },
+            {
+                $pull: {
+                    image: {
+                            public_id: request.body.public_id
+                        }
+                    }
+            }
+        )
+        .then( dbResponse => {
+            response.status( 200 ).send({ message: 'Success' });
+        })
+        .catch((error) => {
+            response.status( 500 ).send({ message: 'Server Error' });
+        });
+    })
+});
+
+// remove product images
+// api/v1/users/:userId/:productId/images
+router.delete('/:userId/:productId/images', (request, response) => {
+    const { userId, productId} = request.params;
+
+    // delete image in cloudinary
+    removeFiles(request.body.public_id).then(() => {
+
+        //delete the image in the database
+        User.updateOne( 
+            { _id: userId },
+            {
+                $pull: {
+                    'productList.$[updateProduct].productImage': {
+                        public_id: request.body.public_id
+                    }
+                }
+            },
+            {
+                arrayFilters: [
+                    { "updateProduct.productId" : productId }
+                ]
+            }
+        )
+        .then( dbResponse => {
+            response.status( 200 ).send({ message: 'Success' });
+        })
+        .catch((error) => {
+            response.status( 500 ).send({ message: 'Server Error' });
+        });
     })
 });
 
