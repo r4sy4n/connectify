@@ -60,7 +60,7 @@ router.get('/:userId/product-list', (request, response) => {
 
 // change user info
 // api/v1/users/:userId
-router.put('/:userId', upload.single('userImage'), (request, response) => {
+router.put('/:userId', (request, response) => {
 
     const {
         username,
@@ -71,32 +71,52 @@ router.put('/:userId', upload.single('userImage'), (request, response) => {
         phone,
         shopName,
         shopURL,
-        shopLogo
+        shopLogo,
     } = request.body
 
     let hashedPassword;
-    
-    // find the user that will have the information updated
+
+    if(password) {
+        bcrypt.hash( password, 10 ).then((hash, err) => {
+            hashedPassword = hash;
+        })
+    }
+
+    User.updateOne(
+        { _id : request.params.userId },
+        { 
+            username: username,
+            password: hashedPassword,
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            shopName: shopName,
+            shopURL: shopURL,
+            shopLogo: shopLogo
+        }
+    )
+    .then(dbResponse => {
+        response.status( 200 ).send({ message: 'Update Success' });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
+    })
+});
+
+// change user image
+// api/v1/users/:userId/profile-image
+router.put('/:userId/profile-image', upload.single('userImage'), (request, response) => {
+
+        // find the user that will have the information updated
     User.findOne({ _id: request.params.userId }).then(dbResponse => {
 
         //specify the image that will be uploaded and where it will be saved in Cloudinary
         const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
-
-            if(password) {
-                bcrypt.hash( password, 10 ).then((hash, err) => {
-                    hashedPassword = hash;
-                })
-            }
-
+            
             User.updateOne(
                 { _id : request.params.userId },
                 { 
-                    username: username,
-                    password: hashedPassword,
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email,
-                    phone: phone,
                     $push: {
                         image: {
                             $each: [{
@@ -105,20 +125,17 @@ router.put('/:userId', upload.single('userImage'), (request, response) => {
                             }],
                             $position: 0
                         },
-                    },
-                    shopName: shopName,
-                    shopURL: shopURL,
-                    shopLogo: shopLogo
                     }
+                }
             )
             .then(dbResponse => {
-                response.status( 200 ).send({ message: 'Update Success' });
+                response.status( 200 ).send({ message: 'Upload Success' });
             })
             .catch((error) => {
                 response.status( 500 ).send({ message: 'Server Error' });
             })
-        
         })
+
     })
 });
 
@@ -170,7 +187,7 @@ router.put('/:userId/product-list', (request, response) => {
 
 // change user's product info
 // api/v1/users/:userId/:productId
-router.put('/:userId/:productId', upload.any(), (request, response) => {
+router.put('/:userId/:productId', upload.single('productImages'), (request, response) => {
     const { userId, productId } = request.params;
     const {
         productName,
@@ -182,29 +199,18 @@ router.put('/:userId/:productId', upload.any(), (request, response) => {
     User.findOne({ _id: userId }).then(dbResponse => {
 
         //specify the image that will be uploaded and where it will be saved in Cloudinary
-        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${request.params.userId}/Profile Images`).then(data => {
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${ userId }/Product Images/ ${ productId }`).then(data => {
 
             //update the product in the user's product list
             User.updateOne( 
                 { _id: userId },
                 {
-                    $set: {
                         productList: {
                             productId: productId,
                             productName: productName,
                             productDescription: productDescription,
-                            productPrice: productPrice,
-                            $push: {
-                                productImage: {
-                                    $each: [{
-                                        url: data.url, // image url from cloudinary
-                                        public_id: data.public_id // unique id of the image
-                                    }],
-                                    $position: 0
-                                },
-                            }
+                            productPrice: productPrice
                         }
-                    }
                 }
             )
             .then( dbResponse => {
@@ -215,6 +221,49 @@ router.put('/:userId/:productId', upload.any(), (request, response) => {
             })
         });
     });
+});
+
+// change product image
+// api/v1/users/:userId/:productId/images
+router.put('/:userId/:productId/images', upload.single('productImages'), (request, response) => {
+
+    const { userId, productId } = request.params
+
+        // find the user that will have the information updated
+    User.findOne({ _id: userId }).then(dbResponse => {
+
+        //specify the image that will be uploaded and where it will be saved in Cloudinary
+        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${ userId }/Product Images/${ productId }`).then(data => {
+            
+            User.updateOne(
+                { _id: userId },
+                { 
+                    $push: {
+                        'productList.$[updateProduct].productImage': {
+                            $each: [{
+                                url: data.url, // image url from cloudinary
+                                public_id: data.public_id // unique id of the image
+                            }],
+                            $position: 0
+                        },
+                    }
+                },
+                {
+                    arrayFilters: [
+                        {"updateProduct.productId" : productId}
+                    ]
+                }
+            )
+            .then(dbResponse => {
+                response.status( 200 ).send({ message: 'Upload Success', dbResponse });
+            })
+            .catch((error) => {
+                response.status( 500 ).send({ message: 'Server Error' });
+                console.log(error)
+            })
+        })
+
+    })
 });
 
 // add orders
