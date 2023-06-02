@@ -1,12 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import LoginRegister from './components/LoginRegister';
+
 import {
-    LoginRegister, 
     LandingPage, 
     ErrorPage, 
     ContactUs, 
     Catalog 
 } from './pages';
+
 import {
     CheckOutPage,
     ProductList,
@@ -22,8 +25,6 @@ import {
 } from './pages/dashboard';
 
 const App = () => {
-
-
 
   return (
     <BrowserRouter>
