@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/Navbar";
 import { Link } from "react-router-dom";
 import LogoBanner from "./LogoBanner";
-import LoginRegister from "./LoginRegister";
+// import LoginRegister from "./LoginRegister";
 
 const Navbar = () => {;
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const Navbar = () => {;
           <div>
             <span  onClick={openModal}>Login | Sign Up Free</span>
           </div>
-          {isModalOpen && <LoginRegister closeModal={closeModal} />}
+          {/* {isModalOpen && <LoginRegister closeModal={closeModal} />} */}
       </div>
     </Wrapper>
   )
