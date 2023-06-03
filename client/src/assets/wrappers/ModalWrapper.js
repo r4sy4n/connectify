@@ -14,13 +14,12 @@ const ModalWrapper = styled.main`
 
     .modal-container {
         position: relative;
-        width: 100%;
-        height: 80%;
-        max-width: 800px;
+        min-width: 30%;
+        min-height: 35%;
         background: #FFF;
         text-align: left;
         border-radius: 10px;
-        padding: 30px;
+        padding: 30px 50px;
     }
 
     .modal-close {
@@ -37,5 +36,41 @@ const ModalWrapper = styled.main`
         right: -10px;
         cursor: pointer;
     }
+
+    label {
+        margin: 10px 0;
+    }
+
+    input {
+        padding: 5px;
+    }
 `
-export default ModalWrapper;
+
+const LoginWrapper = styled.div`
+    .title {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .loginForm {
+        display: grid;
+    }
+
+    .buttonContainer {
+        position: absolute;
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+        left: 0;
+        right: 0;
+        bottom: 10%;
+    }
+
+    @media (max-width: 767px) {
+        .buttonContainer {
+            position: relative;
+        } 
+    }
+`
+
+export { ModalWrapper, LoginWrapper };

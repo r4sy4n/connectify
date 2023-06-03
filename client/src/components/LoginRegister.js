@@ -1,12 +1,36 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useReducer, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
-import ModalWrapper from '../assets/wrappers/ModalWrapper';
+import { ModalWrapper, LoginWrapper } from '../assets/wrappers/ModalWrapper';
 
-const LoginRegister = () => {
+const LoginRegister = ({ closeModal }) => {
+
+    const navigate = useNavigate();
+
+    const initialStates = {
+        email: '',
+        password: '',
+        errorMessage: ''
+    }
+
+    const reducer = (state, action) => {
+        switch(action.type) {
+            case 'ON_CHANGE':
+                return {
+                    ...state,
+                    [action.state]: action.value
+                }
+
+            default: 
+                return state;
+        }
+    }
+
+    const [state, dispatch] = useReducer(reducer, initialStates)
   
   //hides the modal when clicked outside or the 'x' button
   const hideModal = (event) => {
@@ -15,9 +39,13 @@ const LoginRegister = () => {
       
       if (modalContainer !== undefined) {
           if (!modalContainer.contains(event.target) || modalClose.contains(event.target)){
-              // globalDispatch({ type: 'RESET', state: 'showBookModal' });
+            closeModal();
           }
       }
+  }
+
+  const loginFormHandler = (event) => {
+    event.preventDefault();
   }
   
   return (
@@ -29,12 +57,74 @@ const LoginRegister = () => {
     <div className='modal-container'>
 
         {/* Start Close Button */}
-        <div className='modal-close flex center-middle'
+        <div className='modal-close'
             onClick={ hideModal }
         >
             <Icon><CloseCircleOutline/></Icon>
         </div>
         {/* End Close Button */}
+
+        <LoginWrapper>
+
+            <div className='title'>
+                <h2> Log in</h2>
+            </div>
+
+            <form
+                className='loginForm'
+                onSubmit={ loginFormHandler }
+            >
+                {/* EMAIL */}
+                <label htmlFor='email'>Email Address: </label>
+                <input
+                    type='email'
+                    id = 'email'
+                    value = { state.email }
+                    placeholder='Enter your email address'
+                    onChange= { (event) =>
+                        dispatch({
+                            type: 'ON_CHANGE',
+                            state: event.target.id,
+                            value: event.target.value
+                        })
+                    }
+                />
+
+                {/* PASSWORD */}
+                <label htmlFor='email'>Password: </label>
+                <input
+                    type='password'
+                    id = 'password'
+                    value = { state.password }
+                    placeholder='Enter your password'
+                    onChange= { (event) =>
+                        dispatch({
+                            type: 'ON_CHANGE',
+                            state: event.target.id,
+                            value: event.target.value
+                        })
+                    }
+                />
+
+                <div className='buttonContainer'>
+                    <button
+                        type='submit'
+                        className='btn'
+                    >
+                        Login
+                    </button>
+
+                    <button
+                        type='button'
+                        className='btn'
+                        onClick={ navigate(-1) }
+                    >
+                        Sign Up Free
+                    </button>
+                </div>
+                
+            </form>
+        </LoginWrapper>
     </div>
   </ModalWrapper>
   )
