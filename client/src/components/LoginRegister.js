@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useContext } from 'react';
+import React, { useState, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -11,12 +11,15 @@ const LoginRegister = ({ closeModal }) => {
 
     const navigate = useNavigate();
 
+    const [isLoading, setIsLoading] = useState();
+
     const initialStates = {
         email: '',
         password: '',
         errorMessage: {
             email: '',
             password: '',
+            credentials: ''
         }
     }
 
@@ -25,7 +28,11 @@ const LoginRegister = ({ closeModal }) => {
             case 'ON_CHANGE':
                 return {
                     ...state,
-                    [action.state]: action.value
+                    [action.state]: action.value,
+                    errorMessage: {
+                        ...state.errorMessage,
+                        credentials: ''
+                    }
                 }
 
             case 'ERROR_MESSAGE':
@@ -59,16 +66,32 @@ const LoginRegister = ({ closeModal }) => {
   const loginFormHandler = (event) => {
     event.preventDefault();
 
-    if(state.email === '') {
+    if( !state.email ) {
         dispatch({ type: 'ERROR_MESSAGE', state: 'email', value: 'Email cannot be empty' })
-            console.log(state.errorMessage.email)
     }
 
-    if(state.password === '') {
+    if( !state.password ) {
         dispatch({ type: 'ERROR_MESSAGE', state: 'password', value: 'Password cannot be empty' })
     }
+
+    if( state.email && state.password ) {
+
+        setIsLoading(true)
+
+        axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
+
+                localStorage.setItem('token', dbResponse.data.token)
+                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' })
+                setIsLoading(false)
+
+        })
+        .catch(error => {
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email/Password is incorrect' })
+            setIsLoading(false)
+        })
+    }
   }
-  
+
   return (
     //modal's overlay container
     <ModalWrapper
@@ -85,69 +108,76 @@ const LoginRegister = ({ closeModal }) => {
         </div>
         {/* End Close Button */}
 
-        <LoginWrapper>
+        {
+            isLoading
+            ? <p> Loading </p>
+            :
+            <LoginWrapper>
 
-            <div className='title'>
-                <h2> Log in</h2>
-            </div>
-
-            <form
-                className='loginForm'
-                onSubmit={ loginFormHandler }
-            >
-                {/* EMAIL */}
-                <label htmlFor='email'>Email Address: </label>
-                <input
-                    type='email'
-                    id = 'email'
-                    value = { state.email }
-                    placeholder='Enter your email address'
-                    onChange= { (event) =>
-                        dispatch({
-                            type: 'ON_CHANGE',
-                            state: event.target.id,
-                            value: event.target.value
-                        })
-                    }
-                />
-                { !state.email && <p>{ state.errorMessage.email }</p> }
-
-                {/* PASSWORD */}
-                <label htmlFor='email'>Password: </label>
-                <input
-                    type='password'
-                    id = 'password'
-                    value = { state.password }
-                    placeholder='Enter your password'
-                    onChange= { (event) =>
-                        dispatch({
-                            type: 'ON_CHANGE',
-                            state: event.target.id,
-                            value: event.target.value
-                        })
-                    }
-                />
-                { !state.password && <p>{ state.errorMessage.password }</p> }
-
-                <div className='buttonContainer'>
-                    <button
-                        type='submit'
-                        className='btn'
-                    >
-                        Login
-                    </button>
-
-                    <button
-                        type='button'
-                        className='btn'
-                        onClick={ navigate(-1) }
-                    >
-                        Sign Up Free
-                    </button>
+                <div className='title'>
+                    <h2> Log in</h2>
                 </div>
-                
-            </form>
-        </LoginWrapper>
+
+                <form
+                    className='loginForm'
+                    onSubmit={ loginFormHandler }
+                >
+                    {/* EMAIL */}
+                    <label htmlFor='email'>Email Address: </label>
+                    <input
+                        type='email'
+                        id = 'email'
+                        value = { state.email }
+                        placeholder='Enter your email address'
+                        onChange= { (event) =>
+                            dispatch({
+                                type: 'ON_CHANGE',
+                                state: event.target.id,
+                                value: event.target.value
+                            })
+                        }
+                    />
+                    { !state.email && <p>{ state.errorMessage.email }</p> }
+
+                    {/* PASSWORD */}
+                    <label htmlFor='email'>Password: </label>
+                    <input
+                        type='password'
+                        id = 'password'
+                        value = { state.password }
+                        placeholder='Enter your password'
+                        onChange= { (event) =>
+                            dispatch({
+                                type: 'ON_CHANGE',
+                                state: event.target.id,
+                                value: event.target.value
+                            })
+                        }
+                    />
+                    { !state.password && <p>{ state.errorMessage.password }</p> }
+                    { !state.credentials && <p>{ state.errorMessage.credentials }</p> }
+
+                    <div className='buttonContainer'>
+                        <button
+                            type='submit'
+                            className='btn'
+                        >
+                            Login
+                        </button>
+
+                        <button
+                            type='button'
+                            className='btn'
+                            onClick={() => navigate() }
+                        >
+                            Sign Up Free
+                        </button>
+                    </div>
+                    
+                </form>
+            </LoginWrapper>
+        
+        }
     </div>
   </ModalWrapper>
   )
