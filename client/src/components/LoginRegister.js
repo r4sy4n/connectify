@@ -14,7 +14,10 @@ const LoginRegister = ({ closeModal }) => {
     const initialStates = {
         email: '',
         password: '',
-        errorMessage: ''
+        errorMessage: {
+            email: '',
+            password: '',
+        }
     }
 
     const reducer = (state, action) => {
@@ -23,6 +26,15 @@ const LoginRegister = ({ closeModal }) => {
                 return {
                     ...state,
                     [action.state]: action.value
+                }
+
+            case 'ERROR_MESSAGE':
+                return {
+                    ...state,
+                    errorMessage: {
+                        ...state.errorMessage,
+                        [action.state]: action.value
+                    }
                 }
 
             default: 
@@ -46,6 +58,15 @@ const LoginRegister = ({ closeModal }) => {
 
   const loginFormHandler = (event) => {
     event.preventDefault();
+
+    if(state.email === '') {
+        dispatch({ type: 'ERROR_MESSAGE', state: 'email', value: 'Email cannot be empty' })
+            console.log(state.errorMessage.email)
+    }
+
+    if(state.password === '') {
+        dispatch({ type: 'ERROR_MESSAGE', state: 'password', value: 'Password cannot be empty' })
+    }
   }
   
   return (
@@ -89,6 +110,7 @@ const LoginRegister = ({ closeModal }) => {
                         })
                     }
                 />
+                { !state.email && <p>{ state.errorMessage.email }</p> }
 
                 {/* PASSWORD */}
                 <label htmlFor='email'>Password: </label>
@@ -105,6 +127,7 @@ const LoginRegister = ({ closeModal }) => {
                         })
                     }
                 />
+                { !state.password && <p>{ state.errorMessage.password }</p> }
 
                 <div className='buttonContainer'>
                     <button
