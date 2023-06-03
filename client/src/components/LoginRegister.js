@@ -80,14 +80,15 @@ const LoginRegister = ({ closeModal }) => {
 
         axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
 
-                localStorage.setItem('token', dbResponse.data.token)
-                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' })
-                setIsLoading(false)
+                localStorage.setItem('token', dbResponse.data.token);
+                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
+                setIsLoading(false);    
+                navigate(`/${ dbResponse.data.userDetails.userType }`)
 
         })
         .catch(error => {
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email/Password is incorrect' })
-            setIsLoading(false)
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email/Password is incorrect' });
+            setIsLoading(false);
         })
     }
   }
