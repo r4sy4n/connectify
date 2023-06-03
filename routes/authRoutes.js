@@ -25,7 +25,7 @@ router.post('/register', ( request, response ) => {
                     image: '',
                     productList: [],
                     orderList: [],
-                    usertype: request.body.usertype 
+                    userType: request.body.userType 
                 });
 
                 newUser.save().then( dbResponse => {
@@ -50,7 +50,7 @@ router.post('/login', ( request, response ) => {
                 //create token
                 const token = jwt.sign({ id: dbResponse._id, email: dbResponse.email }, SECRET );
                 const userDetails = {
-                    usertype: dbResponse.usertype, 
+                    userType: dbResponse.userType, 
                     id: dbResponse._id, 
                     email: dbResponse.email
                 }
