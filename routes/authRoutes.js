@@ -16,13 +16,14 @@ router.post('/register', ( request, response ) => {
         }else{
              bcrypt.hash( request.body.password, 10 ).then((hash, err) => {
                 const newUser = new User({
-                    username: request.body.username,
+                    username: '',
                     password: hash,
                     email: request.body.email,
                     firstName: request.body.firstName,
                     lastName: request.body.lastName,
+                    shopName: request.body.shopName,
                     phone: request.body.phone,
-                    image: '',
+                    image: {},
                     productList: [],
                     orderList: [],
                     userType: request.body.userType 
