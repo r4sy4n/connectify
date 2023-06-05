@@ -22,6 +22,19 @@ transition: 0.3s ease-in-out all;
       align-items: center;
       padding: 0 2.5rem;
     }
+    .toggle-btn{
+      margin-left: 220px;
+      padding-top: 1rem;
+      background: transparent;
+      border-color: transparent;
+      font-size: 1.75rem;
+      color: #EB455F;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      transition: 0.3s ease-in-out all;
+    }
+    
     .logo{
       width: 250px;
     }
@@ -63,7 +76,7 @@ transition: 0.3s ease-in-out all;
       color: #0079FF;
     }
     .settings{
-      margin-top: 25rem;
+      margin-top: 20rem;
     }
 `
 export default Wrapper;
