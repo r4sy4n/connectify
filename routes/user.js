@@ -116,6 +116,29 @@ router.put('/:userId', (request, response) => {
     });
 });
 
+router.put('/:userId/password', (request, response) => {
+
+    const password = request.body.password;
+
+    bcrypt.hash( password, 10 ).then((hash, err) => {
+        const hashedPassword = hash;
+        
+        User.updateOne(
+            { _id : request.params.userId },
+            { 
+                password: hashedPassword
+            }
+        )
+        .then(dbResponse => {
+            response.status( 200 ).send({ message: 'Password Updated' });
+        })
+        .catch((error) => {
+            response.status( 500 ).send({ message: 'Server Error' });
+        });
+    })
+    
+});
+
 // change user image
 // api/v1/users/:userId/profile-image
 router.put('/:userId/profile-image', upload.single('userImage'), (request, response) => {
