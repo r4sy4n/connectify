@@ -22,8 +22,29 @@ const CatalogWrapper = styled.main`
   }
 
   .category-container {
-    aspect-ratio: 1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     background: darkred;
+    aspect-ratio: 1;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .category-container * {
+    color: white;
+  }
+
+  .category-btn {
+    min-width: 150px;
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    margin-top: 20px;
   }
 `
 export default CatalogWrapper;
