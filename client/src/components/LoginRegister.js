@@ -139,7 +139,26 @@ const LoginRegister = ({ closeModal }) => {
 
         setIsLoading(true)
 
-      
+        axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/register`, {
+          firstName: state.firstName,
+          lastName: state.lastName,
+          email: state.email,
+          password: state.password,
+          shopName: state.shopName,
+          phone: state.phone,
+          userType: state.userType.toLowerCase()
+        }).then((dbResponse) => {
+
+                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
+                setIsLoading(false);
+                alert('Successfully Created. Please Login')
+                formToggle()
+
+        })
+        .catch(error => {
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Username/Email already Taken' });
+            setIsLoading(false);
+        })
     }
   }
 
@@ -160,11 +179,11 @@ const LoginRegister = ({ closeModal }) => {
         {/* End Close Button */}
 
         {
-          isLogin
-          ?
-            isLoading
-            ? <p> Loading </p>
-            :
+          isLoading
+          ? <p> Loading </p>
+          :
+            isLogin
+            ?
             <LoginWrapper>
 
                 <div className='title'>
