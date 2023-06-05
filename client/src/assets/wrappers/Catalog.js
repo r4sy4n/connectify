@@ -41,10 +41,16 @@ const CatalogWrapper = styled.main`
   .category-btn {
     min-width: 150px;
     background: transparent;
-    border: 1px solid white;
+    border: 2px solid #FFFFFF80;
     border-radius: 50px;
     padding: 10px 20px;
     margin-top: 20px;
+    transition: all 0.3s ease-out;
+
+    &:hover {
+      cursor: pointer;
+      border: 2px solid #FFFFFF;
+    }
   }
 `
 export default CatalogWrapper;
