@@ -2,6 +2,7 @@ import { createContext, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 import Wrapper from '../../assets/wrappers/SharedLayout';
 
+
 export const SharedLayoutContext = createContext();
 
 const SharedLayout = () => {
