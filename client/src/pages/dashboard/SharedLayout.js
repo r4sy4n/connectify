@@ -1,7 +1,7 @@
 import { createContext, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import Wrapper from '../../assets/wrappers/SharedLayout';
-import Sidebar from '../../components/Sidebar';
+import Wrapper from '../../assets/wrapper/SharedLayout';
+
 
 export const SharedLayoutContext = createContext();
 

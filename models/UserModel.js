@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
-    username: {type: String, required: true},
+    username: {type: String},
     password: {type: String, required: true, select: false},
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
@@ -32,7 +32,7 @@ const UserSchema = mongoose.Schema({
     }],
     orderList: [{
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Product'
+            ref: 'Order'
     }],
     userType: String,
 });
