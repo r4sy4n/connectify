@@ -11,7 +11,7 @@ const { uploadFiles, removeFiles } = require('../services/cloudinary');
 // get users
 // api/v1/users
 router.get('/', (request, response) => {
-    User.find().then(dbResponse => {
+    User.find().lean().then(dbResponse => {
         response.status( 200 ).send({ users: dbResponse });
     })
     .catch((error) => {
@@ -22,7 +22,7 @@ router.get('/', (request, response) => {
 // get a specific users
 // api/v1/users/:userId
 router.get('/:userId', (request, response) => {
-    User.findOne({ _id: request.params.userId }).then(dbResponse => {
+    User.findOne({ _id: request.params.userId }).lean().then(dbResponse => {
         if (dbResponse) {
             response.status( 200 ).send({ user: dbResponse });
         }
@@ -38,7 +38,7 @@ router.get('/:userId', (request, response) => {
 // get order list
 // api/v1/users/:userId/order-list
 router.get('/:userId/order-list', (request, response) => {
-    User.findOne({ _id : request.params.userId }).populate('orderList').then(dbResponse => {
+    User.findOne({ _id : request.params.userId }).lean().populate('orderList').then(dbResponse => {
         if (dbResponse.orderList !== 0) {
             response.status( 200 ).send({ orderList: dbResponse.orderList });
         }
@@ -54,7 +54,7 @@ router.get('/:userId/order-list', (request, response) => {
 // get product list
 // api/v1/users/:userId/product-list
 router.get('/:userId/product-list', (request, response) => {
-    User.findOne({ _id : request.params.userId }).populate('productList.productId').then(dbResponse => {
+    User.findOne({ _id : request.params.userId }).lean().populate('productList.productId').then(dbResponse => {
         if (dbResponse.productList.length !== 0) {
             response.status( 200 ).send({ productList: dbResponse.productList });
         }
