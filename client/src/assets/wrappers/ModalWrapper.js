@@ -52,8 +52,14 @@ const LoginWrapper = styled.div`
         margin-bottom: 20px;
     }
 
-    .loginForm {
+    form {
         display: grid;
+    }
+
+    .error-message {
+        color: red;
+        font-size: 14px;
+        margin-bottom: 10px;
     }
 
     .buttonContainer {
@@ -73,4 +79,28 @@ const LoginWrapper = styled.div`
     }
 `
 
-export { ModalWrapper, LoginWrapper };
+const RegisterWrapper = styled(LoginWrapper)`
+
+    .buttonContainer {
+        position: relative;
+    }
+
+    form {
+        max-width: 80%;
+        margin: auto;
+    }
+
+    select {
+        padding: 5px;
+    }
+
+    .login-text {
+        cursor: pointer;
+    }
+
+    .already_member {
+        text-align: center;
+    }
+`
+
+export { ModalWrapper, LoginWrapper, RegisterWrapper };
