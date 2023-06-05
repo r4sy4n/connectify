@@ -39,7 +39,7 @@ router.post('/register', ( request, response ) => {
 // login user
 // api/v1/users/login
 router.post('/login', ( request, response ) => {
-    User.findOne({ email: request.body.email }).select('+password').then( dbResponse => {
+    User.findOne({ email: request.body.email }).select('+password').lean().then( dbResponse => {
         if( !dbResponse ){
             return response.status( 404 ).send({ error: 'Email does not exist' });
         }
@@ -50,7 +50,7 @@ router.post('/login', ( request, response ) => {
                 //create token
                 const token = jwt.sign({ id: dbResponse._id, email: dbResponse.email }, SECRET );
                 const userDetails = {
-                    usertype: dbResponse.usertype, 
+                    userType: dbResponse.userType, 
                     id: dbResponse._id, 
                     email: dbResponse.email
                 }
