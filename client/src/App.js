@@ -8,7 +8,8 @@ import {
     LandingPage, 
     ErrorPage, 
     ContactUs, 
-    Catalog 
+    Catalog, 
+    CategoryPage
 } from './pages';
 
 import {

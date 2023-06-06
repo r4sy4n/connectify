@@ -15,6 +15,10 @@ const ModalWrapper = styled.main`
         color: #2B3467;
     }
 
+  p {
+        margin: 0 !important;
+    }
+
     .modal-container {
         position: relative;
         min-width: 30%;
@@ -68,7 +72,6 @@ const LoginWrapper = styled.div`
     }
 
     .buttonContainer {
-        position: absolute;
         display: flex;
         justify-content: space-evenly;
         margin-top: 20px;
