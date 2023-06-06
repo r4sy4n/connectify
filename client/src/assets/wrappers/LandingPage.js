@@ -2,15 +2,7 @@ import styled from 'styled-components';
 
 const Wrapper = styled.main`
   background-color: #F3E8FF;
-
-  nav {
-    width: 90vw;
-    max-width: 1120px;
-    margin: 0 auto;
-    height: 6rem;
-    display: flex;
-    align-items: center;
-  }
+  
   .logo{
     margin-bottom: 3rem;
   }
@@ -33,67 +25,39 @@ const Wrapper = styled.main`
   }
   h1 {
     font-weight: 700;
-    color: #EB455F;
-  }
-  h2, h3{
-    color: #2B3467;
   }
   p {
-    color: #041562;
     margin: 3rem;
   }
-  ul{
-    list-style-type: none;
+  .how-container,
+  .why-container,
+  .brand-container,
+  .brand-container,
+  footer { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 6rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }  
+  .how-container, 
+  .brand-container {
+    background-color: #9DB2BF;
   }
   .how-container{
-    background-color: #9DB2BF;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     height: 80vh;
-    padding-top: 6rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  .why-container{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 6rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
   }
   .brand-container{
-    background-color: #9DB2BF;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     height: 60vh;
-    padding-top: 6rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
   }
   footer{
     color: #041562;
     background:#EB455F;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
     height: 40vh;
-    padding-top: 6rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
   }
   .pic{
     width: 20rem;

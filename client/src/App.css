@@ -22,8 +22,12 @@ h5 {
 h1 {
   margin-top: 0;
   font-size: 3.052rem;
+  color: #EB455F;
 }
-
+h2,
+h3 {
+  color: #2B3467;
+}
 h2 {
   font-size: 2.441rem;
 }
@@ -43,10 +47,14 @@ h5 {
 p {
   margin-bottom: 1.5rem;
   max-width: 40em;
+  color: #041562;
 }
 a {
   text-decoration: none;
   letter-spacing: 1px;
+}
+ul {
+  list-style-type: none;
 }
 .btn {
   cursor: pointer;
