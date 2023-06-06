@@ -113,13 +113,21 @@ form {
   transition: 0.3s ease-in-out all;
 }
 .loading {
-  width: 6rem;
-  height: 6rem;
-  border: 5px solid #AEE2FF;
+  width: 4rem;
+  height: 4rem;
+  border: 10px solid #AEE2FF;
   border-radius: 50%;
   border-top-color: #EB455F;
   animation: spinner 2s linear infinite;
 }
 .loading-center {
-  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spinner {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
