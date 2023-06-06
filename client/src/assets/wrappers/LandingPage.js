@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const Wrapper = styled.main`
   background-color: #F3E8FF;
-  
-  .logo{
+
+  .logo-big{
     margin-bottom: 3rem;
   }
   .container {
