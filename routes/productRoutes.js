@@ -19,6 +19,10 @@ router.get( '/:category', ( request, response ) => {
     Product.find({ catalog: request.params.category }).then(dbResponse => {
         response.status( 200 ).send( { products: dbResponse });
     })
+    .catch( error => {
+        console.log( error )
+        response.status( 500 ).send( { error: 'Server error' });
+    });
 });
 
 // Display product by id
