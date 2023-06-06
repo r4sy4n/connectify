@@ -13,6 +13,14 @@ router.get( '/', ( request, response ) => {
     })
 });
 
+// Display products by category(catalog)
+// /api/v1/products/:category
+router.get( '/:category', ( request, response ) => {
+    Product.find({ catalog: request.params.category }).then(dbResponse => {
+        response.status( 200 ).send( { products: dbResponse });
+    })
+});
+
 // Display product by id
 router.get( '/:productId', ( request, response ) => {
     Product.findOne( { _id: request.params.productId } )
