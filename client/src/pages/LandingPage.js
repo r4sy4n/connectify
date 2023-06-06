@@ -5,6 +5,8 @@ import register from '../assets/images/register.jpg';
 import choose from '../assets/images/choose.jpg';
 import sell from '../assets/images/sell.jpg';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -15,6 +17,7 @@ const LandingPage = () => {
   return (
    <Wrapper>
       <nav>
+        <Navbar />
       </nav>
       <section className='container page'>
         <div>
@@ -62,7 +65,6 @@ const LandingPage = () => {
         Copyright © 2023 Connectify Philippines
       </footer>
     </Wrapper>
-
   )
 }
 
