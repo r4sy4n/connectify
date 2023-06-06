@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Loading from '../components/Loading'
 
-import { utils } from '../components/Utils';
+import { utils } from '../components/utils/Utils';
 
 import { ProductWrapper } from '../assets/wrappers/Catalog';
 
@@ -15,7 +15,7 @@ const CategoryPage = () => {
     const [ isLoading, setIsLoading ] = useState(true);
 
     useEffect(() => {
-        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/products/${ category }`)
+        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/products/${ category }/products`)
         .then((dbResponse) => {
             setProductList(dbResponse.data.products);
             setIsLoading(false);

@@ -15,7 +15,7 @@ router.get( '/', ( request, response ) => {
 
 // Display products by category(catalog)
 // /api/v1/products/:category
-router.get( '/:category', ( request, response ) => {
+router.get( '/:category/products', ( request, response ) => {
     Product.find({ catalog: request.params.category }).then(dbResponse => {
         response.status( 200 ).send( { products: dbResponse });
     })
