@@ -11,7 +11,7 @@ import { GlobalVariables } from '../App';
 import { ModalWrapper, LoginWrapper, RegisterWrapper } from '../assets/wrappers/ModalWrapper';
 
 const LoginRegister = ({ closeModal }) => {
-    const { globalCurrentUser, globalChangeCurrentUser } = useContext( GlobalVariables );
+    const { globalChangeCurrentUser } = useContext( GlobalVariables );
 
     const navigate = useNavigate();
 
@@ -74,6 +74,7 @@ const LoginRegister = ({ closeModal }) => {
       }
   }
 
+  
   const formToggle = () => {
     setIsLogin(!isLogin);
     dispatch({ type: 'RESET' });
