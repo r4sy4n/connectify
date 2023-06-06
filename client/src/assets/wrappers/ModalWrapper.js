@@ -11,6 +11,9 @@ const ModalWrapper = styled.main`
   top: 0;
   left: 0;
   z-index: 99;
+  h2 {
+        color: #2B3467;
+    }
 
     .modal-container {
         position: relative;
@@ -36,12 +39,14 @@ const ModalWrapper = styled.main`
         right: -10px;
         cursor: pointer;
     }
-
+    
     label {
         margin: 10px 0;
+        color: #2B3467;
     }
 
     input {
+        margin: 2px 0;
         padding: 5px;
     }
 `
@@ -86,7 +91,6 @@ const RegisterWrapper = styled(LoginWrapper)`
     }
 
     form {
-        max-width: 80%;
         margin: auto;
     }
 
