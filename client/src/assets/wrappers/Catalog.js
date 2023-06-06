@@ -21,7 +21,7 @@ const CatalogWrapper = styled.main`
     margin: 100px 0;
   }
 
-  .category-container {
+  .list-container {
     display:flex;
     align-items: center;
     justify-content: center;
@@ -34,11 +34,11 @@ const CatalogWrapper = styled.main`
     }
   }
 
-  .category-container * {
+  .list-container * {
     color: white;
   }
 
-  .category-btn {
+  button {
     min-width: 150px;
     background: transparent;
     border: 2px solid #FFFFFF80;
@@ -53,4 +53,11 @@ const CatalogWrapper = styled.main`
     }
   }
 `
-export default CatalogWrapper;
+
+const ProductWrapper = styled(CatalogWrapper)`
+
+  .main-container {
+    grid-template-columns: repeat(5, 1fr);
+  }
+`
+export { CatalogWrapper, ProductWrapper};

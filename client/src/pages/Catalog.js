@@ -1,8 +1,11 @@
 import React from 'react';
-import CatalogWrapper from '../assets/wrappers/Catalog';
+import { useNavigate } from 'react-router-dom';
+
+import { CatalogWrapper } from '../assets/wrappers/Catalog';
 import { categories } from '../components/CategoryList';
 
 const Catalog = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <CatalogWrapper>
@@ -15,10 +18,14 @@ const Catalog = () => {
         <div className='main-container'>
           {
             categories.map(list => 
-              <div className='category-container'>
+              <div
+                key={ list.name }
+                className='list-container'
+                onClick={() => navigate( list.name.trim().replace(/\s+/g, '-').toLowerCase() )}
+              >
                 <h2>{ list.name }</h2>
                 <p>{ list.description }</p>
-                <button className='category-btn'>OPEN</button>
+                <button>OPEN</button>
               </div>
             )
           }
