@@ -5,6 +5,8 @@ import axios from 'axios';
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
+import Loading from '../components/Loading'
+
 import { ModalWrapper, LoginWrapper, RegisterWrapper } from '../assets/wrappers/ModalWrapper';
 
 const LoginRegister = ({ closeModal }) => {
@@ -180,7 +182,7 @@ const LoginRegister = ({ closeModal }) => {
 
         {
           isLoading
-          ? <p> Loading </p>
+          ? Loading(true)
           :
             isLogin
             ?
@@ -194,10 +196,11 @@ const LoginRegister = ({ closeModal }) => {
                     onSubmit={ loginFormHandler }
                 >
                     {/* EMAIL */}
-                    <label htmlFor='email'>Email Address: </label>
+                    <label htmlFor='email' className='form-label' >Email Address: </label>
                     <input
                         type='email'
                         id = 'email'
+                        className='form-input'
                         value = { state.email }
                         placeholder='Enter your email address'
                         onChange= { (event) =>
@@ -212,10 +215,11 @@ const LoginRegister = ({ closeModal }) => {
                     { !state.email && state.errorMessage.email ? <p className='error-message'>{ state.errorMessage.email }</p> : null }
 
                     {/* PASSWORD */}
-                    <label htmlFor='password'>Password: </label>
+                    <label htmlFor='password' className='form-label'>Password: </label>
                     <input
                         type='password'
                         id = 'password'
+                        className='form-input'
                         value = { state.password }
                         placeholder='Enter your password'
                         onChange= { (event) =>
@@ -260,10 +264,11 @@ const LoginRegister = ({ closeModal }) => {
                     onSubmit={ loginFormHandler }
                 >
                     {/* Personal Information */}
-                    <label>Personal Information: </label>
+                    <label className='form-label'>Personal Information: </label>
                     <input
                         type='text'
                         id = 'firstName'
+                        className='form-input'
                         value = { state.firstName }
                         placeholder='First Name'
                         onChange= { (event) =>
@@ -280,6 +285,7 @@ const LoginRegister = ({ closeModal }) => {
                     <input
                         type='text'
                         id = 'lastName'
+                        className='form-input'
                         value = { state.lastName }
                         placeholder='Last Name'
                         onChange= { (event) =>
@@ -296,6 +302,7 @@ const LoginRegister = ({ closeModal }) => {
                     <input
                         type='email'
                         id = 'email'
+                        className='form-input'
                         value = { state.email }
                         placeholder='Email'
                         onChange= { (event) =>
@@ -312,6 +319,7 @@ const LoginRegister = ({ closeModal }) => {
                     <input
                         type='password'
                         id = 'password'
+                        className='form-input'
                         value = { state.password }
                         placeholder='Password'
                         onChange= { (event) =>
@@ -328,6 +336,7 @@ const LoginRegister = ({ closeModal }) => {
                     <input
                         type='password'
                         id = 'confirmPassword'
+                        className='form-input'
                         value = { state.confirmPassword }
                         placeholder='Confirm Password'
                         onChange= { (event) =>
@@ -342,10 +351,11 @@ const LoginRegister = ({ closeModal }) => {
                     { !state.confirmPassword && state.errorMessage.confirmPassword ? <p className='error-message'>{ state.errorMessage.confirmPassword }</p> : null }
 
                     {/* Business Information */}
-                    <label>Business Information: </label>
+                    <label className='form-label'>Business Information: </label>
                     <input
                         type='text'
                         id = 'shopName'
+                        className='form-input'
                         value = { state.shopName }
                         placeholder='Business Name'
                         onChange= { (event) =>
@@ -362,6 +372,7 @@ const LoginRegister = ({ closeModal }) => {
                     <input
                         type='phone'
                         id = 'phone'
+                        className='form-input'
                         value = { state.phone }
                         placeholder='Contact Number'
                         onChange= { (event) =>
@@ -378,6 +389,7 @@ const LoginRegister = ({ closeModal }) => {
                     <select
                     id='userType'
                     value={state.userType}
+                    className='form-select'
                     onChange={(event) => dispatch({
                         type: 'ON_CHANGE',
                         payload: {
@@ -386,8 +398,8 @@ const LoginRegister = ({ closeModal }) => {
                         }
                     })}
                     >
-                      <option value='seller'>Seller</option>
-                      <option value='supplier'>Supplier</option>
+                    <option value='seller'>Seller</option>
+                    <option value='supplier'>Supplier</option>
                     </select>
                     
                     { !state.credentials && state.errorMessage.credentials ? <p className='error-message'>{ state.errorMessage.credentials }</p> : null }
