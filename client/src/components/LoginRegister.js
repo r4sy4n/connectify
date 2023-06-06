@@ -6,10 +6,12 @@ import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
 import Loading from '../components/Loading'
+import { GlobalVariables } from '../App';
 
 import { ModalWrapper, LoginWrapper, RegisterWrapper } from '../assets/wrappers/ModalWrapper';
 
 const LoginRegister = ({ closeModal }) => {
+    const { globalCurrentUser, globalChangeCurrentUser } = useContext( GlobalVariables );
 
     const navigate = useNavigate();
 
@@ -94,10 +96,14 @@ const LoginRegister = ({ closeModal }) => {
 
         axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
 
-                localStorage.setItem('token', dbResponse.data.token);
-                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                setIsLoading(false);    
+            localStorage.setItem('token', dbResponse.data.token);
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
+            
+            axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ dbResponse.data.userDetails.id }`).then((userResponse) => {
+                setIsLoading(false);
                 navigate(`/${ dbResponse.data.userDetails.userType }`);
+                globalChangeCurrentUser(userResponse.data.user);
+            });
 
         })
         .catch(error => {

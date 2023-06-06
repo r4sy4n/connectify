@@ -1,5 +1,5 @@
 import './App.css';
-import React from 'react';
+import React, { useState, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import LoginRegister from './components/LoginRegister';
@@ -25,30 +25,39 @@ import {
     WebsitePage
 } from './pages/dashboard';
 
+export const GlobalVariables = createContext();
+
 const App = () => {
+
+  const [currentUser, setCurrentUser] = useState()
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path='supplier' element={ <SharedLayout/> }>
-          <Route index element={ <SupplierDashboard/> } />
-          <Route path='manage' element={ <SupplierManageProducts/> } />
-          <Route path='profile' element={ <SupplierProfile/> } />
-        </Route>
-        <Route path='seller' element={ <SharedLayout/> }>
-          <Route index element={ <SellerDashboard/> } />
-          <Route path='manage' element={ <SellerManageProducts/> } />
-          <Route path='profile' element={ <SellerProfile/> } />
-          <Route path=':usershopname' element={ <WebsitePage/> } />
-          <Route path=':usershopname/productlist' element={ <ProductList/> } />
-          <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
-        </Route>
-        <Route path='/' element={ <LandingPage/> } />
-        <Route path='register' element={ <LoginRegister/> } />
-        <Route path='contactus' element={ <ContactUs/> } />
-        <Route path='catalog' element={ <Catalog/> } />
-        <Route path='*' element={ <ErrorPage/> } />
-      </Routes>
+      <GlobalVariables.Provider value={{
+        globalCurrentUser: currentUser,
+        globalChangeCurrentUser: setCurrentUser
+      }}>
+        <Routes>
+          <Route path='supplier' element={ <SharedLayout/> }>
+            <Route index element={ <SupplierDashboard/> } />
+            <Route path='manage' element={ <SupplierManageProducts/> } />
+            <Route path='profile' element={ <SupplierProfile/> } />
+          </Route>
+          <Route path='seller' element={ <SharedLayout/> }>
+            <Route index element={ <SellerDashboard/> } />
+            <Route path='manage' element={ <SellerManageProducts/> } />
+            <Route path='profile' element={ <SellerProfile/> } />
+            <Route path=':usershopname' element={ <WebsitePage/> } />
+            <Route path=':usershopname/productlist' element={ <ProductList/> } />
+            <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
+          </Route>
+          <Route path='/' element={ <LandingPage/> } />
+          <Route path='register' element={ <LoginRegister/> } />
+          <Route path='contactus' element={ <ContactUs/> } />
+          <Route path='catalog' element={ <Catalog/> } />
+          <Route path='*' element={ <ErrorPage/> } />
+        </Routes>
+      </GlobalVariables.Provider>
     </BrowserRouter>
   )
 }
