@@ -19,12 +19,15 @@ h5 {
   text-transform: capitalize;
   letter-spacing: 1px;
 }
-
 h1 {
   margin-top: 0;
   font-size: 3.052rem;
+  color: #EB455F;
 }
-
+h2,
+h3 {
+  color: #2B3467;
+}
 h2 {
   font-size: 2.441rem;
 }
@@ -35,6 +38,37 @@ h3 {
 
 h4 {
   font-size: 1.563rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+p {
+  margin-bottom: 1.5rem;
+  max-width: 40em;
+  color: #041562;
+}
+a {
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+ul {
+  list-style-type: none;
+}
+.btn {
+  cursor: pointer;
+  color: #AEE2FF;
+  background: #EB455F;
+  border: transparent;
+  border-radius: 0.25rem;
+  letter-spacing: 1px;
+  padding: 0.375rem 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: 0.3s ease-in-out all;
+  text-transform: capitalize;
+  display: inline-block;
 }
 
 h5 {
