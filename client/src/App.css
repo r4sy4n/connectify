@@ -1,5 +1,3 @@
-<<<<<<< client/src/App.css
-
 body {
   background: #F3E8FF;
   font-family: 'Karma', serif;
@@ -93,7 +91,6 @@ form {
   padding: 2rem 2.5rem;
   margin: 3rem auto;
   transition: 0.3s ease-in-out all;
->>>>>>> client/src/App.css
 }
 .loading {
   width: 6rem;
@@ -103,7 +100,6 @@ form {
   border-top-color: #EB455F;
   animation: spinner 2s linear infinite;
 }
-
 .loading-center {
   margin: 0 auto;
 }
