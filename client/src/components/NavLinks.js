@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import links from '../utils/links';
+import { GlobalVariables } from '../App';
+import { useContext } from 'react';
 
 const NavLinks = (close) => {
   const handleLinkClick = () => {
@@ -7,21 +9,18 @@ const NavLinks = (close) => {
       close.toggle();
     }
   }
-  const usertype = localStorage.getItem('usertype');
+  
+  const { globalCurrentUser } = useContext( GlobalVariables );
+  
+  
   return (
     <div className='nav-links'>
       {links.filter((link) => {
-        if (usertype === 'seller') {
+        if (globalCurrentUser.userType === 'seller') {
           return link.text.toLowerCase() !== 'supplier';
-        } else 
-        // if (usertype === 'supplier') 
-        {
+        } else {
           return link.text.toLowerCase() !== 'seller';
         } 
-        // else {
-        //   return link.text.toLowerCase() !== 'admin';
-        //   // return true; // Include all other links when role is not 'admin' or 'user'
-        // }
       }).map((link) => {
         const { text, path, id, icon } = link;
         return (

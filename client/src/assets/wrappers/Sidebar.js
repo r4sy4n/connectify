@@ -34,7 +34,12 @@ transition: 0.3s ease-in-out all;
       align-items: center;
       transition: 0.3s ease-in-out all;
     }
-    
+    h5{
+      color: #EB455F;
+    }
+    .greetings{
+      text-align: center;
+    }
     .logo{
       width: 250px;
     }

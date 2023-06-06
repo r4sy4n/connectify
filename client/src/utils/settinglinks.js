@@ -11,7 +11,7 @@ const settinglinks = [
     {
         id: 2,
         text: 'Logout',
-        path: 'settings',
+        path: '/',
         icon: <CgLogOut/>,
     },
 ]

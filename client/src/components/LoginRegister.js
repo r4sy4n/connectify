@@ -104,12 +104,14 @@ const LoginRegister = ({ closeModal }) => {
 
             localStorage.setItem('token', dbResponse.data.token);
             dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-            
+
             //get the logged in user's information from database
             axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ dbResponse.data.userDetails.id }`).then((userResponse) => {
                 setIsLoading(false);
                 navigate(`/${ dbResponse.data.userDetails.userType }`);
                 globalChangeCurrentUser(userResponse.data.user);
+
+
             });
 
         })

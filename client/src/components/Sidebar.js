@@ -6,11 +6,13 @@ import LogoBanner from "./LogoBanner";
 import NavLinks from "./NavLinks";
 import SettingLinks from "./SettingLinks";
 import {BsFillArrowLeftSquareFill, BsFillArrowRightSquareFill} from 'react-icons/bs';
+import { GlobalVariables } from '../App';
 
 const Sidebar = () => {
-    const {showSidebar, setShowsidebar} = useContext(SharedLayoutContext);
-    const [sidebar, setSidebar] = useState(false);
-    
+  const {showSidebar, setShowsidebar} = useContext(SharedLayoutContext);
+  const [sidebar, setSidebar] = useState(false);
+  const { globalCurrentUser } = useContext( GlobalVariables );
+  
   return (
    <Wrapper className={showSidebar ? null : 'hide'}>
       <div className='sidebar-container'>
@@ -25,6 +27,9 @@ const Sidebar = () => {
           <header>
             <LogoBanner className='logo'/>
           </header>
+          <div className='greetings'>
+            <h5>Welcome, {globalCurrentUser.firstName}</h5>
+          </div>
           <NavLinks/>
           <div className="settings">
             <SettingLinks/>
