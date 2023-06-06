@@ -206,7 +206,7 @@ const LoginRegister = ({ closeModal }) => {
             
          //checks if loading spinner should be display or the form
           isLoading
-          ? Loading(true)
+          ? <Loading center />
           :
             isLogin
             ?

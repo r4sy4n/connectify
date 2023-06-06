@@ -71,20 +71,6 @@ ul {
   display: inline-block;
 }
 
-h5 {
-  font-size: 1.25rem;
-}
-
-p {
-  margin-bottom: 1.5rem;
-  max-width: 40em;
-}
-
-a {
-  text-decoration: none;
-  letter-spacing: 1px;
-}
-
 .btn {
   cursor: pointer;
   color: #AEE2FF;
