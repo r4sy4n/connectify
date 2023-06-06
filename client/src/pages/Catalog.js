@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { CatalogWrapper } from '../assets/wrappers/Catalog';
-import { categories } from '../components/CategoryList';
+import { categories } from '../assets/data/CategoryList';
 
 const Catalog = () => {
   const navigate = useNavigate();
