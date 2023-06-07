@@ -8,14 +8,14 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 position: relative;
-z-index: 1;
+margin-top: 10rem;
+cursor: pointer;
 
 .title-container {
   width: 100%;
-  padding: 10rem 0;
+
 
   p {
-    font-size: 18px;
     margin: 0;
     text-align: center; 
     max-width: none;
@@ -27,6 +27,29 @@ z-index: 1;
   }
 }
 
+
+/* Contact Details */
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+  gap: 3rem;
+  padding: 3rem;
+}
+
+
+/* Border */
+
+.contact-border {
+  width: 3px;
+  height: 25rem;
+  background-color: #EB455F;
+  margin: 0 3rem;
+  align-self: center;
+}
 `
+
+
 
 export default ContactWrapper
