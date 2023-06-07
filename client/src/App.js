@@ -10,7 +10,8 @@ import {
     ErrorPage, 
     ContactUs, 
     Catalog, 
-    CategoryPage
+    CategoryPage,
+    ProtectedRoute
 } from './pages';
 
 import {
@@ -49,12 +50,20 @@ const App = () => {
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
-          <Route path='supplier' element={ <SharedLayout/> }>
+          <Route path='supplier' element={ 
+          <ProtectedRoute>
+            <SharedLayout/> 
+          </ProtectedRoute>
+          }>
             <Route index element={ <SupplierDashboard/> } />
             <Route path='manage' element={ <SupplierManageProducts/> } />
             <Route path='profile' element={ <SupplierProfile/> } />
           </Route>
-          <Route path='seller' element={ <SharedLayout/> }>
+          <Route path='seller' element={ 
+          <ProtectedRoute>
+            <SharedLayout/> 
+          </ProtectedRoute>
+          }>
             <Route index element={ <SellerDashboard/> } />
             <Route path='manage' element={ <SellerManageProducts/> } />
             <Route path='profile' element={ <SellerProfile/> } />
