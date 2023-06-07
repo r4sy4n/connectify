@@ -3,7 +3,6 @@ import ProductList from './ProductList';
 import SellerDashboard from './SellerDashboard';
 import SellerManageProducts from './SellerManageProducts';
 import SellerProfile from './SellerProfile';
-import Settings from './Settings';
 import SharedLayout from './SharedLayout';
 import SupplierDashboard from './SupplierDashboard';
 import SupplierManageProducts from './SupplierManageProducts';
@@ -18,7 +17,6 @@ export {
     SellerDashboard,
     SellerManageProducts,
     SellerProfile,
-    Settings,
     SharedLayout,
     SupplierDashboard,
     SupplierManageProducts,
