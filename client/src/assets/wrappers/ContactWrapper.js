@@ -8,7 +8,7 @@ align-items: center;
 justify-content: center;
 flex-direction: column;
 position: relative;
-margin-top: 10rem;
+margin-top: 13rem;
 cursor: pointer;
 
 .title-container {
