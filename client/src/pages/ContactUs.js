@@ -7,7 +7,6 @@ import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
 const ContactUs = () => {
   return (
     <div>
-      <Navbar />
       <ContactWrapper>
         <div className='title-container'>
           <h1>Get in touch</h1>

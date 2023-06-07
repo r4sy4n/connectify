@@ -35,7 +35,7 @@ const CategoryPage = () => {
 
     {    
     isLoading
-        ? Loading(true)
+        ? <Loading center />
         :
         <div className='main-container'>
         {

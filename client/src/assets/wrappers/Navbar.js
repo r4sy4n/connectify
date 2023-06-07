@@ -8,7 +8,7 @@ const Wrapper = styled.nav`
   background:#AEE2FF;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
   width: 100%;
-  position: fixed;
+  position: sticky;
   top: 0;
   z-index: 999;
 .logo{
