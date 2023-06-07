@@ -144,7 +144,7 @@ const Button = styled.button`
 `;
 
 
-export default {
+export {
   ContactWrapper, 
   ContactDetailsWrapper, 
   ContactItem, 
