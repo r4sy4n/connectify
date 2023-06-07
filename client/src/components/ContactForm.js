@@ -1,13 +1,13 @@
 import React from 'react'
-import { useState, useReducer } from 'react'
+import { useReducer } from 'react'
 import { ContactFormWrapper, Form, Button } from '../assets/wrappers/ContactWrapper';
-import PopupMessage from './PopupMessage';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   name: '',
   email: '',
   message: '',
-  showPopup: false,
 };
 
 const formReducer = (state, action) => {
@@ -18,10 +18,6 @@ const formReducer = (state, action) => {
       return { ...state, email: action.payload };
     case 'SET_MESSAGE':
       return { ...state, message: action.payload };
-    case 'SHOW_POPUP':
-      return { ...state, showPopup: true };
-    case 'HIDE_POPUP':
-      return { ...state, showPopup: false };
     default:
       return state;
   }
@@ -37,12 +33,9 @@ const ContactForm = () => {
       dispatch({ type: 'SET_NAME', payload: '' });
       dispatch({ type: 'SET_EMAIL', payload: '' });
       dispatch({ type: 'SET_MESSAGE', payload: '' });
-      dispatch({ type: 'SHOW_POPUP' });
-    };  
 
-    const handleClose = () => {
-      dispatch({ type: 'HIDE_POPUP' });
-    };
+      toast.success('Message sent!');
+    };  
 
   return (
     <ContactFormWrapper>
@@ -76,13 +69,6 @@ const ContactForm = () => {
 
         <Button type="submit">Send</Button>
       </Form>
-
-      {state.showPopup && ( 
-        <PopupMessage onClose={ handleClose }>
-          <p>Thank you for contacting us!</p>
-        </PopupMessage>
-      )}
-        
     </ContactFormWrapper>
   );
 };
