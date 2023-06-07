@@ -101,18 +101,15 @@ const LoginRegister = ({ closeModal }) => {
 
         //check the email/password combination if it exists in the database
         axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
+
+            localStorage.setItem('token', dbResponse.data.token);
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
             
             //get the logged in user's information from database
             axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ dbResponse.data.userDetails.id }`).then((userResponse) => {
-
-                localStorage.setItem('token', dbResponse.data.token);
-                localStorage.setItem('user', dbResponse.data.userDetails.id);
-
-                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                navigate(`/${ dbResponse.data.userDetails.userType }`);
-                
-                globalChangeCurrentUser(userResponse.data.user);
                 setIsLoading(false);
+                navigate(`/${ dbResponse.data.userDetails.userType }`);
+                globalChangeCurrentUser(userResponse.data.user);
             });
 
         })
@@ -173,7 +170,7 @@ const LoginRegister = ({ closeModal }) => {
           password: state.password,
           shopName: state.shopName,
           phone: state.phone,
-          userType: state.userType.toLowerCase()
+          userType: state.userType
         }).then((dbResponse) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
@@ -414,19 +411,18 @@ const LoginRegister = ({ closeModal }) => {
                     { !state.phone && state.errorMessage.phone ? <p className='error-message'>{ state.errorMessage.phone }</p> : null }
 
                     <select
-                    id='userType'
-                    value={state.userType}
-                    className='form-select'
-                    onChange={(event) => dispatch({
-                        type: 'ON_CHANGE',
-                        payload: {
+                        id='userType'
+                        value={state.userType}
+                        className='form-select'
+                        onChange={(event) =>
+                            dispatch({
+                            type: 'ON_CHANGE',
                             state: event.target.id,
                             value: event.target.value
-                        }
-                    })}
+                        })}
                     >
-                    <option value='seller'>Seller</option>
-                    <option value='supplier'>Supplier</option>
+                        <option value='seller'>Seller</option>
+                        <option value='supplier'>Supplier</option>
                     </select>
                     
                     { !state.credentials && state.errorMessage.credentials ? <p className='error-message'>{ state.errorMessage.credentials }</p> : null }
