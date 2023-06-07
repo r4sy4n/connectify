@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { CatalogWrapper } from '../assets/wrappers/Catalog';
 import { categories } from '../assets/data/CategoryList';
 
+import Footer from '../components/Footer'
+
 const Catalog = () => {
   const navigate = useNavigate();
   return (
@@ -31,6 +33,7 @@ const Catalog = () => {
           }
         </div>
       </CatalogWrapper>
+      <Footer />
     </div>
   )
 }

@@ -32,8 +32,7 @@ const Wrapper = styled.main`
   .how-container,
   .why-container,
   .brand-container,
-  .brand-container,
-  footer { 
+  .brand-container { 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,11 +52,6 @@ const Wrapper = styled.main`
   }
   .brand-container{
     height: 60vh;
-  }
-  footer{
-    color: #041562;
-    background:#EB455F;
-    height: 40vh;
   }
   .pic{
     width: 20rem;
