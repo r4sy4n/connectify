@@ -2,7 +2,6 @@ import React from 'react'
 import { useReducer } from 'react'
 import { ContactFormWrapper, Form, Button } from '../assets/wrappers/ContactWrapper';
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const initialState = {
   name: '',

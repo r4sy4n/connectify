@@ -110,7 +110,7 @@ const LoginRegister = ({ closeModal }) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 navigate(`/dashboard`);
-                
+                toast.success('Login Successful!')
                 globalChangeCurrentUser(userResponse.data.user);
             });
 

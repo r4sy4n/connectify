@@ -1,10 +1,12 @@
 import { NavLink } from 'react-router-dom';
 import settinglinks from '../utils/settinglinks';
+import { toast } from 'react-toastify';
 
 const SettingLinks = (close) => {
   const handleLinkClick = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    toast.success('Logout Successful!');
     if (typeof close.toggle === 'function') {
       close.toggle();
     }
