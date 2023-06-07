@@ -1,6 +1,7 @@
 import './App.css';
-import React, { useState, createContext } from 'react';
+import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import LoginRegister from './components/LoginRegister';
 
@@ -30,7 +31,16 @@ export const GlobalVariables = createContext();
 
 const App = () => {
 
-  const [currentUser, setCurrentUser] = useState()
+  const [currentUser, setCurrentUser] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('user'));
+
+  useEffect(() => {
+    if(isLoggedIn) {
+      axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ isLoggedIn }`).then((userResponse) => {
+        setCurrentUser(userResponse.data.user);
+    });
+    }
+  },[])
 
   return (
     <BrowserRouter>
