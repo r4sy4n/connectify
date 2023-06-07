@@ -40,7 +40,7 @@ const App = () => {
     if(loggedInUserId) {
       axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ loggedInUserId }`).then((userResponse) => {
         setCurrentUser(userResponse.data.user);
-    });
+      });
     }
   },[])
 

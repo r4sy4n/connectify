@@ -7,7 +7,7 @@ const links = [
     {
         id: 1,
         text: 'Stats',
-        path: 'seller',
+        path: '',
         icon: <LuLayoutDashboard/>,
     },
     {

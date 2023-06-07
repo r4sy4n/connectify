@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import links from '../utils/links';
 import { GlobalVariables } from '../App';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 
 const NavLinks = (close) => {
   const handleLinkClick = () => {
@@ -11,12 +11,18 @@ const NavLinks = (close) => {
   }
   
   const { globalCurrentUser } = useContext( GlobalVariables );
-  
+  const [userType, setUserType] = useState('');
+
+  useEffect(() => {
+    if(globalCurrentUser) {
+      setUserType(globalCurrentUser.userType)
+    }
+  },[globalCurrentUser])
   
   return (
     <div className='nav-links'>
       {links.filter((link) => {
-        if (globalCurrentUser.userType === 'seller') {
+        if (userType === 'seller') {
           return link.text.toLowerCase() !== 'supplier';
         } else {
           return link.text.toLowerCase() !== 'seller';
