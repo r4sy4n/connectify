@@ -14,8 +14,8 @@ const ContactItem = styled.div`
   gap: 20px;
   justify-content: flex-start;
   background-color: rgb(157, 178, 191);
-  width: 25rem;
-  height: 5rem;
+  width: 30rem;
+  height: 6rem;
   padding-left: 20px;
   color: #F3E8FF;
   border-radius: 3px;

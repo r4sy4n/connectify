@@ -10,8 +10,8 @@ const ContactUs = () => {
       <Navbar />
       <ContactWrapper>
         <div className='title-container'>
-          <p>Get in touch</p>
-          <h1>CONTACT US</h1>
+          <h1>Get in touch</h1>
+          <p>Want to get in touch? We'd love to hear from you!</p>
         </div>
         <div className='contact-container'>
           <div className='contact-details'>

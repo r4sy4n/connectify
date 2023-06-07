@@ -17,6 +17,7 @@ cursor: pointer;
 
   p {
     margin: 0;
+    margin-top: 10px;
     text-align: center; 
     max-width: none;
   }

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ContactFormWrapper = styled.div`
-  width: 25rem;
+  width: 30rem;
   margin: 0 auto;
 `;
 
@@ -12,7 +12,7 @@ const Form = styled.form`
   box-shadow: none;
   margin: 0;
   padding: 0;
-  width: 25rem;
+  width: 30rem;
 
   label {
     text-align: start;
