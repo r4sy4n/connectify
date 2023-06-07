@@ -22,8 +22,8 @@ const Navbar = () => {;
           <div>
             <ul>
                 <li><Link to='/'style={{ textDecoration: 'none' }}>home</Link></li>
-                <li><Link to='catalog' style={{ textDecoration: 'none' }}>catalog</Link></li>
-                <li><Link to='contactus' style={{ textDecoration: 'none' }}>contact us</Link></li>
+                <li><Link to='/catalog' style={{ textDecoration: 'none' }}>catalog</Link></li>
+                <li><Link to='/contactus' style={{ textDecoration: 'none' }}>contact us</Link></li>
             </ul>
           </div>
           <div>
