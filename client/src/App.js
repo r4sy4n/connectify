@@ -73,7 +73,6 @@ const App = () => {
 
           <Route path='/' element={ <Navbar/> } >
             <Route index element={ <LandingPage/> } />
-            <Route path='register' element={ <LoginRegister/> } />
             <Route path='contactus' element={ <ContactUs/> } />
             <Route path='catalog' element={ <Catalog/> } />
             <Route path='catalog/:category' element={ <CategoryPage/> } />
