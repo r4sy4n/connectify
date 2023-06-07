@@ -2,6 +2,9 @@ import React, { useState, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
@@ -175,12 +178,12 @@ const LoginRegister = ({ closeModal }) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 setIsLoading(false);
-                alert('Successfully Created. Please Login')
-                formToggle()
+                toast('Successfully Created. Please Login');
+                formToggle();
 
         })
         .catch(error => {
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Username/Email already Taken' });
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email already Taken' });
             setIsLoading(false);
         })
     }
