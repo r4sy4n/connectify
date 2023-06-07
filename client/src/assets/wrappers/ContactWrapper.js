@@ -43,8 +43,8 @@ cursor: pointer;
 /* Border */
 
 .contact-border {
-  width: 3px;
-  height: 20rem;
+  width: 5px;
+  height: 23rem;
   background-color: #EB455F;
   margin: 0 3rem;
   align-self: center;
@@ -124,7 +124,7 @@ const Form = styled.form`
   }
 
   textarea {
-    height: 8rem;
+    height: 10rem;
   }
 
   input {
