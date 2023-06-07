@@ -2,6 +2,7 @@ import './App.css';
 import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 import LoginRegister from './components/LoginRegister';
 import Navbar from './components/Navbar';
@@ -74,6 +75,7 @@ const App = () => {
           </Route>
         </Routes>
       </GlobalVariables.Provider>
+      <ToastContainer position='top-center' autoClose={3000} />
     </BrowserRouter>
   )
 }
