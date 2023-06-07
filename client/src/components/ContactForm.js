@@ -1,22 +1,33 @@
 import React from 'react'
 import { useState } from 'react'
 import { ContactFormWrapper, Form, Button } from '../assets/wrappers/ContactFormWrapper';
+import PopupMessage from './PopupMessage';
 
 const ContactForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleSubmit = ( event ) => {
         event.preventDefault();
-        
         console.log( 'Submitted:', name, email, message );
+
+        setName('');
+        setEmail('');
+        setMessage('');
+
+        setShowPopup( true );
         // todo
     };  
 
+    const handleClose = () => {
+      setShowPopup( false );
+    }
+
   return (
     <ContactFormWrapper>
-        <Form>
+      <Form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
         <input
           type="text"
@@ -48,7 +59,14 @@ const ContactForm = () => {
         </textarea>
 
         <Button type="submit">Submit</Button>
-        </Form>
+      </Form>
+
+      {showPopup && ( 
+        <PopupMessage onClose={ handleClose }>
+          <p>Thank you for contacting us!</p>
+        </PopupMessage>
+      )}
+        
     </ContactFormWrapper>
   );
 };
