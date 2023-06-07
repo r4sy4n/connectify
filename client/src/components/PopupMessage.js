@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import { PopupContent, PopupWrapper } from '../assets/wrappers/PopupWrapper';
 
 const PopupMessage = ( { onClose, children } ) => {
