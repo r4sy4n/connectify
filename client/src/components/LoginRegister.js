@@ -1,7 +1,7 @@
 import React, { useState, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
@@ -109,10 +109,11 @@ const LoginRegister = ({ closeModal }) => {
                 localStorage.setItem('user', dbResponse.data.userDetails.id);
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                navigate(`/${ dbResponse.data.userDetails.userType }`);
-                
+                    setTimeout(() =>{
+                        navigate('/dashboard');  
+                    }, 600);
+                toast.success('Login Successful!')
                 globalChangeCurrentUser(userResponse.data.user);
-                setIsLoading(false);
             });
 
         })
@@ -178,7 +179,7 @@ const LoginRegister = ({ closeModal }) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 setIsLoading(false);
-                alert('Successfully Created. Please Login')
+                toast.success('Successfully Created. Please Login')
                 formToggle()
 
         })
