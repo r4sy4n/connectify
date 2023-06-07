@@ -3,6 +3,8 @@ import settinglinks from '../utils/settinglinks';
 
 const SettingLinks = (close) => {
   const handleLinkClick = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     if (typeof close.toggle === 'function') {
       close.toggle();
     }
@@ -18,7 +20,7 @@ const SettingLinks = (close) => {
               return isActive ? 'nav-link active' : 'nav-link';
             }}
             key={id}
-            onClick={handleLinkClick}
+            onClick={text === 'Logout' ? handleLinkClick : undefined}
           >
             <span className='icon'>{icon}</span>
             {text}
