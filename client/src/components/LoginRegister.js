@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
@@ -183,8 +182,8 @@ const LoginRegister = ({ closeModal }) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 setIsLoading(false);
-                
-                toast('Successfully Created. Please Login');
+
+                toast.success('Successfully Created. Please Login');
                 formToggle();
 
         })
