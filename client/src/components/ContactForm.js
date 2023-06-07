@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useReducer } from 'react'
-import { ContactFormWrapper, Form, Button } from '../assets/wrappers/ContactFormWrapper';
+import { ContactFormWrapper, Form, Button } from '../assets/wrappers/ContactWrapper';
 import PopupMessage from './PopupMessage';
 
 const initialState = {

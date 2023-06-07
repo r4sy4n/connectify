@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
-import { ContactDetailsWrapper, ContactItem } from '../assets/wrappers/ContactDetailsWrapper';
+import { ContactDetailsWrapper, ContactItem } from '../assets/wrappers/ContactWrapper';
 
 const ContactDetails = () => {
     return (
