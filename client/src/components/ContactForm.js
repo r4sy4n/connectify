@@ -52,7 +52,6 @@ const ContactForm = () => {
           type="text"
           id="name"
           value={ state.name } 
-          placeholder="Enter your name"
           onChange={( event ) => dispatch({ type: 'SET_NAME', payload: event.target.value })}
           required
         />
@@ -62,7 +61,6 @@ const ContactForm = () => {
           type="email"
           id="email"
           value={ state.email }
-          placeholder="Enter your email address"
           onChange={( event ) => dispatch({ type: 'SET_EMAIL', payload: event.target.value })}
           required
         />
@@ -71,13 +69,12 @@ const ContactForm = () => {
         <textarea
           id="message"
           value={ state.message }
-          placeholder="Enter your message"
           onChange={( event ) => dispatch({ type: 'SET_MESSAGE', payload: event.target.value })}
           required
         >
         </textarea>
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Send</Button>
       </Form>
 
       {state.showPopup && ( 

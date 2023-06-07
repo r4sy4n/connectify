@@ -13,11 +13,22 @@ const ContactItem = styled.div`
   align-items: center;
   gap: 20px;
   justify-content: flex-start;
-  background-color: #EB455F;
+  background-color: rgb(157, 178, 191);
   width: 25rem;
   height: 5rem;
   padding-left: 20px;
   color: #F3E8FF;
+  border-radius: 5px;
+
+  .icon {
+    background-color: #EB455F;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
   p {
     margin: 0;

@@ -25,13 +25,10 @@ const Form = styled.form`
     width: 100%;
     padding: 0.5rem;
     margin-bottom: 1rem;
-    background-color: #EB455F;
+    background-color: rgb(157, 178, 191);
     border: none;
     color: #F3E8FF;
-
-    &::placeholder {
-        color: #F3E8FF;
-    }
+    border-radius: 5px;
   }
 
   textarea {
@@ -50,7 +47,8 @@ const Button = styled.button`
   color: #F3E8FF;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 10px;
+  width: 7rem;
 `;
 
 export { ContactFormWrapper, Form, Button };

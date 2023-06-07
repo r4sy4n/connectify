@@ -6,15 +6,21 @@ const ContactDetails = () => {
     return (
         <ContactDetailsWrapper>
             <ContactItem>
-                <FaPhone />
+                <div className='icon'>
+                    <FaPhone/>
+                </div>
                 <p>123-456-789</p>
             </ContactItem>
             <ContactItem>
-                <FaEnvelope />
+                <div className='icon'>
+                    <FaEnvelope/>
+                </div>
                 <p>connectify@email.com</p>
             </ContactItem>
             <ContactItem>
-                <FaMapMarkerAlt />
+                <div className='icon'>
+                    <FaMapMarkerAlt/>
+                </div>
                 <p>Manila, Philippines</p>
             </ContactItem>
         </ContactDetailsWrapper>

@@ -43,7 +43,7 @@ cursor: pointer;
 
 .contact-border {
   width: 3px;
-  height: 25rem;
+  height: 20rem;
   background-color: #EB455F;
   margin: 0 3rem;
   align-self: center;
