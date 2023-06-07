@@ -101,15 +101,18 @@ const LoginRegister = ({ closeModal }) => {
 
         //check the email/password combination if it exists in the database
         axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
-
-            localStorage.setItem('token', dbResponse.data.token);
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
             
             //get the logged in user's information from database
             axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ dbResponse.data.userDetails.id }`).then((userResponse) => {
-                setIsLoading(false);
+
+                localStorage.setItem('token', dbResponse.data.token);
+                localStorage.setItem('user', dbResponse.data.userDetails.id);
+
+                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 navigate(`/${ dbResponse.data.userDetails.userType }`);
+                
                 globalChangeCurrentUser(userResponse.data.user);
+                setIsLoading(false);
             });
 
         })
