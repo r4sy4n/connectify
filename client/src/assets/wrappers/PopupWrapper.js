@@ -15,6 +15,8 @@ const PopupWrapper = styled.div`
 
 const PopupContent = styled.div`
     display: flex;
+    width: 25rem;
+    height: 10rem;
     justify-content: center;
     align-items: center;
     background-color: #F3E8FF;
