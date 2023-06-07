@@ -109,7 +109,9 @@ const LoginRegister = ({ closeModal }) => {
                 localStorage.setItem('user', dbResponse.data.userDetails.id);
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                navigate(`/dashboard`);
+                    setTimeout(() =>{
+                        navigate('/dashboard');  
+                    }, 600);
                 toast.success('Login Successful!')
                 globalChangeCurrentUser(userResponse.data.user);
             });

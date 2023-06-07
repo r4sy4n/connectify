@@ -32,13 +32,11 @@ const App = () => {
 
   const [currentUser, setCurrentUser] = useState();
   const [loggedInUserId, setLoggedInUserId] = useState(localStorage.getItem('user'));
-  const [currentUserType, setCurrentUserType] = useState();
 
   useEffect(() => {
     if(loggedInUserId) {
       axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ loggedInUserId }`).then((userResponse) => {
         setCurrentUser(userResponse.data.user);
-        setCurrentUserType(userResponse.data.user.userType)
       });
     }
   },[])
@@ -56,9 +54,9 @@ const App = () => {
             <Route path='profile' element={ <Profile/> } />
             <Route path='orders' element={ <Orders/> } />
             <Route path='manage' element={ <ManageProducts/> } />
-            <Route path=':usershopname' element={ currentUserType === 'seller' ? <WebsitePage/> : <ErrorPage/> } />
-            <Route path=':usershopname/productlist' element={ currentUserType === 'seller' ? <ProductList/> : <ErrorPage/> } />
-            <Route path=':usershopname/checkout' element={ currentUserType === 'seller' ? <CheckOutPage/> : <ErrorPage/> } />
+            <Route path=':usershopname' element={ currentUser && currentUser.Type === 'seller' ? <WebsitePage/> : <ErrorPage/> } />
+            <Route path=':usershopname/productlist' element={ currentUser && currentUser.Type === 'seller' ? <ProductList/> : <ErrorPage/> } />
+            <Route path=':usershopname/checkout' element={ currentUser && currentUser.Type === 'seller' ? <CheckOutPage/> : <ErrorPage/> } />
           </Route>
           <Route path='/' element={ <Navbar/> } >
             <Route index element={ <LandingPage/> } />
