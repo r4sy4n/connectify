@@ -1,8 +1,8 @@
-import React from 'react'
-import Navbar from '../components/Navbar'
-import ContactForm from '../components/ContactForm'
-import { ContactDetailsWrapper, ContactItem, ContactWrapper } from '../assets/wrappers/ContactWrapper'
-import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
+import React from 'react';
+import ContactForm from '../components/ContactForm';
+import { ContactDetailsWrapper, ContactItem, ContactWrapper } from '../assets/wrappers/ContactWrapper';
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import Footer from '../components/Footer';
 
 const ContactUs = () => {
   return (
@@ -41,6 +41,7 @@ const ContactUs = () => {
           </div>
         </div>
       </ContactWrapper>
+      <Footer />
     </div>
   )
 }
