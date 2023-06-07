@@ -1,8 +1,8 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import ContactWrapper from '../assets/wrappers/ContactWrapper'
-import ContactDetails from '../components/ContactDetails'
 import ContactForm from '../components/ContactForm'
+import { ContactDetailsWrapper, ContactItem, ContactWrapper } from '../assets/wrappers/ContactWrapper'
+import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa'
 
 const ContactUs = () => {
   return (
@@ -15,7 +15,26 @@ const ContactUs = () => {
         </div>
         <div className='contact-container'>
           <div className='contact-details'>
-            <ContactDetails />
+            <ContactDetailsWrapper>
+              <ContactItem>
+                  <div className='icon'>
+                      <FaPhone/>
+                  </div>
+                  <p>123-456-789</p>
+              </ContactItem>
+              <ContactItem>
+                  <div className='icon'>
+                      <FaEnvelope/>
+                  </div>
+                  <p>connectify@email.com</p>
+              </ContactItem>
+              <ContactItem>
+                  <div className='icon'>
+                      <FaMapMarkerAlt/>
+                  </div>
+                  <p>Manila, Philippines</p>
+              </ContactItem>
+          </ContactDetailsWrapper>
           </div>
           <div className='contact-border'></div>
           <div className='contact-form'>
