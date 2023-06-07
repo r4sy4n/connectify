@@ -16,9 +16,6 @@ const LandingPage = () => {
 
   return (
    <Wrapper>
-      <nav>
-        <Navbar />
-      </nav>
       <section className='container page'>
         <div>
           <h1>CONNECTIFY</h1>
