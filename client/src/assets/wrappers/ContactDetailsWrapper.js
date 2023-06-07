@@ -18,7 +18,7 @@ const ContactItem = styled.div`
   height: 5rem;
   padding-left: 20px;
   color: #F3E8FF;
-  border-radius: 5px;
+  border-radius: 3px;
 
   .icon {
     background-color: #EB455F;

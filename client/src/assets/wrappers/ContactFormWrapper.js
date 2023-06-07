@@ -28,7 +28,7 @@ const Form = styled.form`
     background-color: rgb(157, 178, 191);
     border: none;
     color: #F3E8FF;
-    border-radius: 5px;
+    border-radius: 3px;
   }
 
   textarea {
@@ -47,7 +47,7 @@ const Button = styled.button`
   color: #F3E8FF;
   font-weight: bold;
   cursor: pointer;
-  border-radius: 10px;
+  border-radius: 5px;
   width: 7rem;
 `;
 
