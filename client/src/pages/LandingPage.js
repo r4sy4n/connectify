@@ -5,7 +5,7 @@ import register from '../assets/images/register.jpg';
 import choose from '../assets/images/choose.jpg';
 import sell from '../assets/images/sell.jpg';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../components/Navbar';
+import Footer from '../components/Footer'
 
 
 const LandingPage = () => {
@@ -58,9 +58,7 @@ const LandingPage = () => {
       <section className='brand-container'>
         <h1>Our Brand Partners</h1>
       </section>
-      <footer>
-        Copyright © 2023 Connectify Philippines
-      </footer>
+      <Footer />
     </Wrapper>
   )
 }
