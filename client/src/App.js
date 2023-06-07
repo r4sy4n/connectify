@@ -2,8 +2,10 @@ import './App.css';
 import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 
 import LoginRegister from './components/LoginRegister';
+import Navbar from './components/Navbar';
 
 import {
     LandingPage, 
@@ -62,13 +64,18 @@ const App = () => {
             <Route path=':usershopname/productlist' element={ <ProductList/> } />
             <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
           </Route>
-          <Route path='/' element={ <LandingPage/> } />
-          <Route path='register' element={ <LoginRegister/> } />
-          <Route path='contactus' element={ <ContactUs/> } />
-          <Route path='catalog' element={ <Catalog/> } />
-          <Route path='*' element={ <ErrorPage/> } />
+
+          <Route path='/' element={ <Navbar/> } >
+            <Route index element={ <LandingPage/> } />
+            <Route path='register' element={ <LoginRegister/> } />
+            <Route path='contactus' element={ <ContactUs/> } />
+            <Route path='catalog' element={ <Catalog/> } />
+            <Route path='catalog/:category' element={ <CategoryPage/> } />
+            <Route path='*' element={ <ErrorPage/> } />
+          </Route>
         </Routes>
       </GlobalVariables.Provider>
+      <ToastContainer position='top-center' autoClose={3000} />
     </BrowserRouter>
   )
 }
