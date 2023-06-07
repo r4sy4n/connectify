@@ -104,14 +104,19 @@ const LoginRegister = ({ closeModal }) => {
 
         //check the email/password combination if it exists in the database
         axios.post(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/auth/login`, { email: state.email, password: state.password }).then((dbResponse) => {
-
-            localStorage.setItem('token', dbResponse.data.token);
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
             
             //get the logged in user's information from database
             axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ dbResponse.data.userDetails.id }`).then((userResponse) => {
-                setIsLoading(false);
-                navigate(`/${ dbResponse.data.userDetails.userType }`);
+
+                localStorage.setItem('token', dbResponse.data.token);
+                localStorage.setItem('user', dbResponse.data.userDetails.id);
+
+                dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
+                    setTimeout(() =>{
+                        navigate('/dashboard');  
+                    }, 600);
+                toast.success('Login Successful!')
+
                 globalChangeCurrentUser(userResponse.data.user);
             });
 
@@ -178,6 +183,7 @@ const LoginRegister = ({ closeModal }) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 setIsLoading(false);
+                
                 toast('Successfully Created. Please Login');
                 formToggle();
 
