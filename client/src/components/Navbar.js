@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Wrapper from "../assets/wrappers/Navbar";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import LogoBanner from "./LogoBanner";
 import LoginRegister from "./LoginRegister";
 
@@ -16,6 +16,7 @@ const Navbar = () => {;
     };
 
   return (
+    <>
     <Wrapper>
       <div className='nav-center'>
           <LogoBanner/>
@@ -32,6 +33,8 @@ const Navbar = () => {;
           {isModalOpen && <LoginRegister closeModal={closeModal} />}
       </div>
     </Wrapper>
+    <Outlet />
+    </>
   )
 };
 
