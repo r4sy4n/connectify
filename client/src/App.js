@@ -10,7 +10,8 @@ import {
     ErrorPage, 
     ContactUs, 
     Catalog, 
-    CategoryPage
+    CategoryPage,
+    ProductPage
 } from './pages';
 
 import {
@@ -66,6 +67,8 @@ const App = () => {
           <Route path='register' element={ <LoginRegister/> } />
           <Route path='contactus' element={ <ContactUs/> } />
           <Route path='catalog' element={ <Catalog/> } />
+          <Route path='catalog/:category' element={ <CategoryPage/> } />
+          <Route path='catalog/:category/:productId' element={ <ProductPage/> } />
           <Route path='*' element={ <ErrorPage/> } />
         </Routes>
       </GlobalVariables.Provider>

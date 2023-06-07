@@ -54,10 +54,51 @@ const CatalogWrapper = styled.main`
   }
 `
 
-const ProductWrapper = styled(CatalogWrapper)`
+const CategoryWrapper = styled(CatalogWrapper)`
 
   .main-container {
     grid-template-columns: repeat(5, 1fr);
   }
 `
-export { CatalogWrapper, ProductWrapper};
+
+const ProductWrapper = styled(CatalogWrapper)`
+
+  // left column
+  
+  .main-container {
+    grid-template-columns: repeat(2, 1fr);
+    width: 70%;
+  }
+
+  .image-container {
+    display: grid;
+    grid-gap: 20px;
+  }
+
+  .main-image-container {
+    background: darkred;
+    aspect-ratio: 1;
+  }
+
+  .other-images-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+
+  .other-images-container img {
+    background: darkred;
+    aspect-ratio: 1;
+  }
+
+  // right column
+
+  .product-details-container {
+    text-align: left;
+  }
+
+  .title-container {
+    background: transparent; 
+  }
+`
+export { CatalogWrapper, CategoryWrapper, ProductWrapper};
