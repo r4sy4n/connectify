@@ -44,7 +44,8 @@ const CategoryPage = () => {
             <div
                 key={ list.name }
                 className='list-container'
-                onClick={() => navigate( list._id ) }
+                onClick={() => navigate( `/catalog/${ category }/${ list._id }` ) }
+                style={{ backgroundImage:`url(${ list.image[0].url })` }}
             >
                 <h2>{ list.name }</h2>
                 <p>{ list.description }</p>

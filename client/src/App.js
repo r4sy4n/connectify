@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './components/Navbar';
+import LoginRegister from './components/LoginRegister';
 
 import {
     LandingPage, 
@@ -13,7 +14,8 @@ import {
     ContactUs, 
     Catalog, 
     CategoryPage,
-    ProtectedRoute
+    ProtectedRoute,
+    ProductPage
 } from './pages';
 
 import {

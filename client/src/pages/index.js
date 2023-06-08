@@ -5,6 +5,7 @@ import ContactUs from './ContactUs';
 import Catalog from './Catalog';
 import CategoryPage from './CategoryPage';
 import ProtectedRoute from './ProtectedRoute';
+import ProductPage from './ProductPage';
 
 export { 
     LoginRegister, 
@@ -13,5 +14,6 @@ export {
     ContactUs, 
     Catalog,
     CategoryPage,
-    ProtectedRoute
+    ProtectedRoute,
+    ProductPage
 };
