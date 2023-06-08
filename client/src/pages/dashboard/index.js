@@ -1,25 +1,20 @@
 import CheckOutPage from './CheckoutPage';
 import ProductList from './ProductList';
-import SellerDashboard from './SellerDashboard';
-import SellerManageProducts from './SellerManageProducts';
-import SellerProfile from './SellerProfile';
-import Settings from './Settings';
+import Dashboard from './Dashboard';
+import ManageProducts from './ManageProducts'
 import SharedLayout from './SharedLayout';
-import SupplierDashboard from './SupplierDashboard';
-import SupplierManageProducts from './SupplierManageProducts';
-import SupplierProfile from './SupplierProfile';
 import WebsitePage from './WebsitePage';
+import Profile from './Profile';
+import Orders from './Orders'
+
 
 export {
     CheckOutPage,
     ProductList,
-    SellerDashboard,
-    SellerManageProducts,
-    SellerProfile,
-    Settings,
+    Dashboard,
+    ManageProducts,
+    Profile,
     SharedLayout,
-    SupplierDashboard,
-    SupplierManageProducts,
-    SupplierProfile,
-    WebsitePage
+    WebsitePage,
+    Orders
 };

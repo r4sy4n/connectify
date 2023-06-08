@@ -2,6 +2,8 @@ import React, { useState, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import { toast } from 'react-toastify';
+
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
@@ -109,10 +111,12 @@ const LoginRegister = ({ closeModal }) => {
                 localStorage.setItem('user', dbResponse.data.userDetails.id);
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                navigate(`/${ dbResponse.data.userDetails.userType }`);
-                
+                    setTimeout(() =>{
+                        navigate('/dashboard');  
+                    }, 600);
+                toast.success('Login Successful!')
+
                 globalChangeCurrentUser(userResponse.data.user);
-                setIsLoading(false);
             });
 
         })
@@ -173,17 +177,18 @@ const LoginRegister = ({ closeModal }) => {
           password: state.password,
           shopName: state.shopName,
           phone: state.phone,
-          userType: state.userType.toLowerCase()
+          userType: state.userType
         }).then((dbResponse) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
                 setIsLoading(false);
-                alert('Successfully Created. Please Login')
-                formToggle()
+
+                toast.success('Successfully Created. Please Login');
+                formToggle();
 
         })
         .catch(error => {
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Username/Email already Taken' });
+            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email already Taken' });
             setIsLoading(false);
         })
     }
@@ -414,19 +419,18 @@ const LoginRegister = ({ closeModal }) => {
                     { !state.phone && state.errorMessage.phone ? <p className='error-message'>{ state.errorMessage.phone }</p> : null }
 
                     <select
-                    id='userType'
-                    value={state.userType}
-                    className='form-select'
-                    onChange={(event) => dispatch({
-                        type: 'ON_CHANGE',
-                        payload: {
+                        id='userType'
+                        value={state.userType}
+                        className='form-select'
+                        onChange={(event) =>
+                            dispatch({
+                            type: 'ON_CHANGE',
                             state: event.target.id,
                             value: event.target.value
-                        }
-                    })}
+                        })}
                     >
-                    <option value='seller'>Seller</option>
-                    <option value='supplier'>Supplier</option>
+                        <option value='seller'>Seller</option>
+                        <option value='supplier'>Supplier</option>
                     </select>
                     
                     { !state.credentials && state.errorMessage.credentials ? <p className='error-message'>{ state.errorMessage.credentials }</p> : null }

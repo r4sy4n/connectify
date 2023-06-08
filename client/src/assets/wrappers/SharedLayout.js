@@ -10,7 +10,7 @@ const Wrapper = styled.section`
       margin: 0 auto;
       padding: 2rem 0;
       position: absolute;
-      top: 6.5rem;
+      top: 3rem;
       left: 280px;
       transition: 0.3s ease-in-out all;
     }
@@ -18,11 +18,15 @@ const Wrapper = styled.section`
       margin-left: -250px;
       transition: 0.3s ease-in-out all;
     }
+    .right{
+      display: none;
+      transition: 0.3s ease-in-out all;
+    }
     .move-side{
       margin: 0 auto;
       padding: 2rem 0;
       position: absolute;
-      top: 6.5rem;
+      top: 3rem;
       left: 30px;
       transition: 0.3s ease-in-out all; 
     }
