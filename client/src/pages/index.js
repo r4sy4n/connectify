@@ -4,7 +4,7 @@ import ErrorPage from './ErrorPage';
 import ContactUs from './ContactUs';
 import Catalog from './Catalog';
 import CategoryPage from './CategoryPage';
-import ProductPage from './ProductPage';
+import ProtectedRoute from './ProtectedRoute';
 
 export { 
     LoginRegister, 
@@ -13,5 +13,5 @@ export {
     ContactUs, 
     Catalog,
     CategoryPage,
-    ProductPage
+    ProtectedRoute
 };

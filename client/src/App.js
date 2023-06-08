@@ -2,8 +2,10 @@ import './App.css';
 import React, { useState, useEffect, createContext } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import LoginRegister from './components/LoginRegister';
+import Navbar from './components/Navbar';
 
 import {
     LandingPage, 
@@ -11,21 +13,18 @@ import {
     ContactUs, 
     Catalog, 
     CategoryPage,
-    ProductPage
+    ProtectedRoute
 } from './pages';
 
 import {
     CheckOutPage,
     ProductList,
-    SellerDashboard,
-    SellerManageProducts,
-    SellerProfile,
-    Settings,
+    Dashboard,
+    ManageProducts,
+    Profile,
     SharedLayout,
-    SupplierDashboard,
-    SupplierManageProducts,
-    SupplierProfile,
-    WebsitePage
+    WebsitePage,
+    Orders,
 } from './pages/dashboard';
 
 export const GlobalVariables = createContext();
@@ -39,9 +38,10 @@ const App = () => {
     if(loggedInUserId) {
       axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ loggedInUserId }`).then((userResponse) => {
         setCurrentUser(userResponse.data.user);
-    });
+      });
     }
   },[])
+  
 
   return (
     <BrowserRouter>
@@ -50,18 +50,25 @@ const App = () => {
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
-          <Route path='supplier' element={ <SharedLayout/> }>
-            <Route index element={ <SupplierDashboard/> } />
-            <Route path='manage' element={ <SupplierManageProducts/> } />
-            <Route path='profile' element={ <SupplierProfile/> } />
+          <Route path='dashboard' element={ 
+            <ProtectedRoute>
+              <SharedLayout/> 
+            </ProtectedRoute>
+          }>
+            <Route index element={ <Dashboard/> } />
+            <Route path='profile' element={ <Profile/> } />
+            <Route path='orders' element={ <Orders/> } />
+            <Route path='manage' element={ <ManageProducts/> } />
+            <Route path=':usershopname' element={ currentUser && currentUser.Type === 'seller' ? <WebsitePage/> : <ErrorPage/> } />
+            <Route path=':usershopname/productlist' element={ currentUser && currentUser.Type === 'seller' ? <ProductList/> : <ErrorPage/> } />
+            <Route path=':usershopname/checkout' element={ currentUser && currentUser.Type === 'seller' ? <CheckOutPage/> : <ErrorPage/> } />
           </Route>
-          <Route path='seller' element={ <SharedLayout/> }>
-            <Route index element={ <SellerDashboard/> } />
-            <Route path='manage' element={ <SellerManageProducts/> } />
-            <Route path='profile' element={ <SellerProfile/> } />
-            <Route path=':usershopname' element={ <WebsitePage/> } />
-            <Route path=':usershopname/productlist' element={ <ProductList/> } />
-            <Route path=':usershopname/checkout' element={ <CheckOutPage/> } />
+          <Route path='/' element={ <Navbar/> } >
+            <Route index element={ <LandingPage/> } />
+            <Route path='contactus' element={ <ContactUs/> } />
+            <Route path='catalog' element={ <Catalog/> } />
+            <Route path='catalog/:category' element={ <CategoryPage/> } />
+            <Route path='*' element={ <ErrorPage/> } />
           </Route>
           <Route path='/' element={ <LandingPage/> } />
           <Route path='register' element={ <LoginRegister/> } />
@@ -72,6 +79,7 @@ const App = () => {
           <Route path='*' element={ <ErrorPage/> } />
         </Routes>
       </GlobalVariables.Provider>
+      <ToastContainer position='top-center' autoClose={3000} />
     </BrowserRouter>
   )
 }
