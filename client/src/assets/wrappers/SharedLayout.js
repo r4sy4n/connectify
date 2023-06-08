@@ -3,15 +3,16 @@ import styled from 'styled-components';
 const Wrapper = styled.section`
   
     .dashboard {
-      display: grid;
-      grid-template-columns: 1fr;
+      display: flex;
     }
+
+    div:has(> .dashboard-page) {
+      width: 100%;
+    }
+
     .dashboard-page {
       margin: 0 auto;
-      padding: 2rem 0;
-      position: absolute;
-      top: 3rem;
-      left: 280px;
+      padding: 2rem;
       transition: 0.3s ease-in-out all;
     }
     .hide{
