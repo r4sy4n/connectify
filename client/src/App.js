@@ -6,6 +6,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Navbar from './components/Navbar';
+import LoginRegister from './components/LoginRegister';
 
 import {
     LandingPage, 
@@ -13,7 +14,8 @@ import {
     ContactUs, 
     Catalog, 
     CategoryPage,
-    ProtectedRoute
+    ProtectedRoute,
+    ProductPage
 } from './pages';
 
 import {
@@ -50,33 +52,31 @@ const App = () => {
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
-          <Route path='dashboard' element={ 
-            <ProtectedRoute>
-              <SharedLayout/> 
-            </ProtectedRoute>
-          }>
-            <Route index element={ <Dashboard/> } />
-            <Route path='profile' element={ <Profile/> } />
-            <Route path='orders' element={ <Orders/> } />
-            <Route path='manage' element={ <ManageProducts/> } />
-            <Route path=':usershopname' element={ currentUser && currentUser.Type === 'seller' ? <WebsitePage/> : <ErrorPage/> } />
-            <Route path=':usershopname/productlist' element={ currentUser && currentUser.Type === 'seller' ? <ProductList/> : <ErrorPage/> } />
-            <Route path=':usershopname/checkout' element={ currentUser && currentUser.Type === 'seller' ? <CheckOutPage/> : <ErrorPage/> } />
-          </Route>
+          {
+            currentUser &&
+            <Route path='dashboard' element={ 
+              <ProtectedRoute>
+                <SharedLayout/> 
+              </ProtectedRoute>
+            }>
+              <Route index element={ <Dashboard/> } />
+              <Route path='profile' element={ <Profile/> } />
+              <Route path='orders' element={ <Orders/> } />
+              <Route path='manage' element={ <ManageProducts/> } />
+              <Route path=':usershopname' element={ currentUser && currentUser.Type === 'seller' ? <WebsitePage/> : <ErrorPage/> } />
+              <Route path=':usershopname/productlist' element={ currentUser && currentUser.Type === 'seller' ? <ProductList/> : <ErrorPage/> } />
+              <Route path=':usershopname/checkout' element={ currentUser && currentUser.Type === 'seller' ? <CheckOutPage/> : <ErrorPage/> } />
+            </Route>
+          }
           <Route path='/' element={ <Navbar/> } >
             <Route index element={ <LandingPage/> } />
+            <Route path='register' element={ <LoginRegister/> } />
             <Route path='contactus' element={ <ContactUs/> } />
             <Route path='catalog' element={ <Catalog/> } />
             <Route path='catalog/:category' element={ <CategoryPage/> } />
+            <Route path='catalog/:category/:productId' element={ <ProductPage/> } />
             <Route path='*' element={ <ErrorPage/> } />
           </Route>
-          <Route path='/' element={ <LandingPage/> } />
-          <Route path='register' element={ <LoginRegister/> } />
-          <Route path='contactus' element={ <ContactUs/> } />
-          <Route path='catalog' element={ <Catalog/> } />
-          <Route path='catalog/:category' element={ <CategoryPage/> } />
-          <Route path='catalog/:category/:productId' element={ <ProductPage/> } />
-          <Route path='*' element={ <ErrorPage/> } />
         </Routes>
       </GlobalVariables.Provider>
       <ToastContainer position='top-center' autoClose={3000} />

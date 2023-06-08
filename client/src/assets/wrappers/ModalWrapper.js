@@ -110,4 +110,7 @@ const RegisterWrapper = styled(LoginWrapper)`
     }
 `
 
-export { ModalWrapper, LoginWrapper, RegisterWrapper };
+const UserProductWrapper = styled.div`
+`
+
+export { ModalWrapper, LoginWrapper, RegisterWrapper, UserProductWrapper };
