@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import Loading from '../components/Loading'
 
-import { utils } from '../assets/utils/Utils';
+import { utils } from '../utils/Utils';
 
 import { CategoryWrapper } from '../assets/wrappers/Catalog';
 
