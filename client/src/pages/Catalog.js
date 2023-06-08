@@ -24,6 +24,7 @@ const Catalog = () => {
                 key={ list.name }
                 className='list-container'
                 onClick={() => navigate( list.name.trim().replace(/\s+/g, '-').toLowerCase() )}
+                style={{ backgroundImage:`url(${ list.image })` }}
               >
                 <h2>{ list.name }</h2>
                 <p>{ list.description }</p>

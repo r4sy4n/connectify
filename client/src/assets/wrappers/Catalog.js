@@ -26,7 +26,10 @@ const CatalogWrapper = styled.main`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: darkred;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 0 2000px #00000030;
     aspect-ratio: 1;
 
     &:hover {
@@ -75,8 +78,12 @@ const ProductWrapper = styled(CatalogWrapper)`
     grid-gap: 20px;
   }
 
+  .image-container img {
+    object-fit: cover;
+    max-width: 100%;
+  }
+
   .main-image-container {
-    background: darkred;
     aspect-ratio: 1;
   }
 
@@ -101,4 +108,13 @@ const ProductWrapper = styled(CatalogWrapper)`
     background: transparent; 
   }
 `
-export { CatalogWrapper, CategoryWrapper, ProductWrapper};
+
+const UserProductWrapper = styled(CatalogWrapper)`
+
+  .main-container {
+    grid-template-columns: repeat(5, 1fr);
+    width: 95%;
+    margin: 50px 0;
+  }
+`
+export { CatalogWrapper, CategoryWrapper, ProductWrapper, UserProductWrapper};

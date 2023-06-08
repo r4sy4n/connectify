@@ -6,4 +6,15 @@ export const utils = {
         }
         return newString.join(' ');
     },
+
+    hideModal: closeFunction => event => {
+        let modalContainer = document.querySelector('.modal-container');
+        let modalClose = document.querySelector('.modal-close');
+        
+        if (modalContainer !== undefined) {
+            if (!modalContainer.contains(event.target) || modalClose.contains(event.target)){
+                closeFunction();
+            }
+        }
+    }
 }
