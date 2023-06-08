@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 import Loading from '../components/Loading'
 
-import { utils } from '../assets/utils/Utils';
+import { utils } from '../utils/Utils';
 
-import { ProductWrapper } from '../assets/wrappers/Catalog';
+import { CategoryWrapper } from '../assets/wrappers/Catalog';
 
 const CategoryPage = () => {
     const { category } = useParams();
+    const navigate = useNavigate();
 
     const [ productList, setProductList ] = useState();
     const [ isLoading, setIsLoading ] = useState(true);
@@ -26,7 +27,7 @@ const CategoryPage = () => {
     },[]);
 
   return (
-  <ProductWrapper>
+  <CategoryWrapper>
     <div className='title-container'>
       <h1>
         { utils.titleCase( category ) }
@@ -43,7 +44,7 @@ const CategoryPage = () => {
             <div
                 key={ list.name }
                 className='list-container'
-                onClick={() => console.log('a') }
+                onClick={() => navigate( list._id ) }
             >
                 <h2>{ list.name }</h2>
                 <p>{ list.description }</p>
@@ -53,7 +54,7 @@ const CategoryPage = () => {
         }
         </div>
     }
-  </ProductWrapper>
+  </CategoryWrapper>
   )
 }
 
