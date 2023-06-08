@@ -26,7 +26,10 @@ const CatalogWrapper = styled.main`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    background: darkred;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 0 2000px #00000030;
     aspect-ratio: 1;
 
     &:hover {
@@ -54,10 +57,63 @@ const CatalogWrapper = styled.main`
   }
 `
 
-const ProductWrapper = styled(CatalogWrapper)`
+const CategoryWrapper = styled(CatalogWrapper)`
 
   .main-container {
     grid-template-columns: repeat(5, 1fr);
   }
 `
-export { CatalogWrapper, ProductWrapper};
+
+const ProductWrapper = styled(CatalogWrapper)`
+
+  // left column
+  
+  .main-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .image-container {
+    display: grid;
+    grid-gap: 20px;
+  }
+
+  .image-container img {
+    object-fit: cover;
+    max-width: 100%;
+  }
+
+  .main-image-container {
+    aspect-ratio: 1;
+  }
+
+  .other-images-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 20px;
+  }
+
+  .other-images-container img {
+    background: darkred;
+    aspect-ratio: 1;
+  }
+
+  // right column
+
+  .product-details-container {
+    text-align: left;
+  }
+
+  .title-container {
+    background: transparent; 
+  }
+`
+
+const UserProductWrapper = styled(CatalogWrapper)`
+
+  .main-container {
+    grid-template-columns: repeat(5, 1fr);
+    width: 95%;
+    margin: 50px 0;
+  }
+`
+export { CatalogWrapper, CategoryWrapper, ProductWrapper, UserProductWrapper};
