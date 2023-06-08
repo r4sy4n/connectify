@@ -12,7 +12,8 @@ import {
     ErrorPage, 
     ContactUs, 
     Catalog, 
-    CategoryPage
+    CategoryPage,
+    ProtectedRoute
 } from './pages';
 
 import {
@@ -49,7 +50,11 @@ const App = () => {
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
-          <Route path='dashboard' element={ <SharedLayout/> }>
+          <Route path='dashboard' element={ 
+            <ProtectedRoute>
+              <SharedLayout/> 
+            </ProtectedRoute>
+          }>
             <Route index element={ <Dashboard/> } />
             <Route path='profile' element={ <Profile/> } />
             <Route path='orders' element={ <Orders/> } />
