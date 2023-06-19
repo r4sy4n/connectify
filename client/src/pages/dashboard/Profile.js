@@ -8,20 +8,18 @@ import Loading from '../../components/Loading';
 import { SharedLayoutContext } from './SharedLayout';
 
 const Profile = () => {
-    const { globalChangeCurrentUser } = useContext( GlobalVariables );
+    const { globalCurrentUser, globalLoggedInUserId, globalChangeCurrentUser } = useContext( GlobalVariables );
     const {showSidebar} = useContext(SharedLayoutContext);
-    const navigate = useNavigate();
 
     const [isLoading, setIsLoading] = useState(false);
-    const [isLogin, setIsLogin] = useState(true);
 
     const initialStates = {
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: globalCurrentUser.firstName,
+      lastName: globalCurrentUser.lastName,
+      email: globalCurrentUser.email,
       password: '',
-      shopName: '',
-      phone: '',
+      shopName: globalCurrentUser.shopName,
+      phone: globalCurrentUser.phone,
       errorMessage: {
       }
     }
@@ -57,7 +55,7 @@ const Profile = () => {
 
     const [state, dispatch] = useReducer(reducer, initialStates)
 
-    const registerFormHandler = (event) => {
+    const saveChangesHandler = (event) => {
     event.preventDefault();
 
     //error when firstname is blank
@@ -75,14 +73,6 @@ const Profile = () => {
         dispatch({ type: 'ERROR_MESSAGE', state: 'email', value: 'Email cannot be empty' });
     }
 
-    //error when password is blank
-    if( !state.password ) {
-        dispatch({ type: 'ERROR_MESSAGE', state: 'password', value: 'Password cannot be empty' });
-    }
-    else if (state.password !== state.confirmPassword) {
-        dispatch({ type: 'ERROR_MESSAGE', state: 'confirmPassword', value: 'Password and Confirm Password does not match' });
-    }
-
     //error when shopname is blank
     if( !state.shopName ) {
         dispatch({ type: 'ERROR_MESSAGE', state: 'shopName', value: 'Business Name cannot be empty' });
@@ -94,12 +84,12 @@ const Profile = () => {
     }
 
     //checks if all fields are not empty
-    if( state.firstName && state.lastName && state.email && state.password && state.shopName && state.phone ) {
+    if( state.firstName && state.lastName && state.email && state.shopName && state.phone ) {
 
         setIsLoading(true) //display the loading spinner
 
         //add the user to the database
-        axios.put(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/user/:userId`, {
+        axios.put(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }`, {
           firstName: state.firstName,
           lastName: state.lastName,
           email: state.email,
@@ -109,31 +99,33 @@ const Profile = () => {
         }).then((dbResponse) => {
 
                 dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: '' });
-                setIsLoading(true);
+                setIsLoading(false);
                 console.log(dbResponse)
                 toast.success('Edit Successfully');
-                // formToggle();
 
         })
         .catch(error => {
-            dispatch({ type: 'ERROR_MESSAGE', state: 'credentials', value: 'Email already Taken' });
+            toast.error('Save Failed');
             setIsLoading(false);
             console.log(error)
         })
     }
   }
-  // if (isLoading){
-  //   return <Loading center />
-  // }
+
+  useEffect(() => {
+    globalLoggedInUserId &&
+    axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }`).then((userResponse) => {
+        globalChangeCurrentUser(userResponse.data.user);
+    });
+  },[])
+
   return (
     <Wrapper>
       {    
     isLoading
         ? <Loading center />
         :
-    <form className={showSidebar ? 'form' : 'form-move'}
-                    onSubmit={ registerFormHandler }
-                >
+    <form className={showSidebar ? 'form' : 'form-move'}>
                 <h2>Edit Profile</h2>  
                     {/* Personal Information */}
                     <label className='form-label'>Edit Information: </label>
@@ -203,8 +195,6 @@ const Profile = () => {
                         }
                     />
 
-                    { !state.password && state.errorMessage.password ? <p className='error-message'>{ state.errorMessage.password }</p> : null }
-
                     {/* Business Information */}
                     <label className='form-label'>Edit Business Information: </label>
                     <input
@@ -241,8 +231,6 @@ const Profile = () => {
                     
                     { !state.phone && state.errorMessage.phone ? <p className='error-message'>{ state.errorMessage.phone }</p> : null }
                     
-                    { !state.credentials && state.errorMessage.credentials ? <p className='error-message'>{ state.errorMessage.credentials }</p> : null }
-                    
                     </form>
 }
                     <br/>
@@ -251,7 +239,7 @@ const Profile = () => {
                         <button
                             type='button'
                             className='btn'
-                            onClick={ registerFormHandler }
+                            onClick={ saveChangesHandler }
                         >
                             Save Changes
                         </button>

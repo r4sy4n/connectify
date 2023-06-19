@@ -49,6 +49,7 @@ const App = () => {
     <BrowserRouter>
       <GlobalVariables.Provider value={{
         globalCurrentUser: currentUser,
+        globalLoggedInUserId: loggedInUserId,
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
