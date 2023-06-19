@@ -53,7 +53,7 @@ const App = () => {
       }}>
         <Routes>
           {
-            currentUser &&
+            // currentUser &&
             <Route path='dashboard' element={ 
               <ProtectedRoute>
                 <SharedLayout/> 

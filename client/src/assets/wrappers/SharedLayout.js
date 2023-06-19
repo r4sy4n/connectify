@@ -27,7 +27,7 @@ const Wrapper = styled.section`
       margin: 0 auto;
       padding: 2rem 0;
       position: absolute;
-      top: 3rem;
+      /* top: 3rem; */
       left: 30px;
       transition: 0.3s ease-in-out all; 
     }
