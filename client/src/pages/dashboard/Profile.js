@@ -14,12 +14,12 @@ const Profile = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const initialStates = {
-      firstName: globalCurrentUser.firstName,
-      lastName: globalCurrentUser.lastName,
-      email: globalCurrentUser.email,
+      firstName: '',
+      lastName: '',
+      email: '',
       password: '',
-      shopName: globalCurrentUser.shopName,
-      phone: globalCurrentUser.phone,
+      shopName: '',
+      phone: '',
       errorMessage: {
       }
     }
@@ -113,9 +113,17 @@ const Profile = () => {
   }
 
   useEffect(() => {
+    setIsLoading(true);
+
     globalLoggedInUserId &&
     axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }`).then((userResponse) => {
         globalChangeCurrentUser(userResponse.data.user);
+
+        //set info from database as the value of states
+        Object.keys(state).map(states => {
+            dispatch({type: 'ON_CHANGE', state: states, value: userResponse.data.user[ states ]})
+        })
+        setIsLoading(false);
     });
   },[])
 
