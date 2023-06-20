@@ -49,11 +49,12 @@ const App = () => {
     <BrowserRouter>
       <GlobalVariables.Provider value={{
         globalCurrentUser: currentUser,
+        globalLoggedInUserId: loggedInUserId,
         globalChangeCurrentUser: setCurrentUser
       }}>
         <Routes>
           {
-            currentUser &&
+            // currentUser &&
             <Route path='dashboard' element={ 
               <ProtectedRoute>
                 <SharedLayout/> 
