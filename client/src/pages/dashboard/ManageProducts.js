@@ -10,7 +10,7 @@ import UserProductModal from '../../components/UserProductModal';
 
 const ManageProducts = () => {
   
-    const { globalCurrentUser } = useContext( GlobalVariables )
+    const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [ productList, setProductList ] = useState();
     const [ productModal, setProductModal ] = useState();
@@ -18,7 +18,7 @@ const ManageProducts = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }/product-list`).then((dbResponse) => {
+        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
             setProductList(dbResponse.data.productList);
             setIsLoading(false);
         })
