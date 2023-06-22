@@ -10,7 +10,7 @@ import UserProductModal from '../../components/UserProductModal';
 
 const ManageProducts = () => {
   
-    const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
+    const { globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [ productList, setProductList ] = useState();
     const [ productModal, setProductModal ] = useState();
@@ -27,9 +27,6 @@ const ManageProducts = () => {
         })
     },[]);
 
-
-    // if (isLoading)
-    // return <Loading center />
   return (
   <UserProductWrapper>
     <div className='title-container'>
@@ -50,7 +47,7 @@ const ManageProducts = () => {
                 className='list-container'
                 onClick={() => {
                   setIsModalOpen(true);
-                  setProductModal(list.productId);
+                  setProductModal(list);
                 }}
                 style={{ backgroundImage:`url(${ list.productId.image[0].url })` }}
             >

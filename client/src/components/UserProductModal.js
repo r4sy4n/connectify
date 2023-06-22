@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import { toast } from 'react-toastify';
@@ -10,15 +10,18 @@ import Loading from '../components/Loading'
 import { utils } from '../utils/Utils'
 
 import { ModalWrapper, UserProductWrapper } from '../assets/wrappers/ModalWrapper';
+import { GlobalVariables } from '../App';
 
 const UserProductModal = ({ closeModal, product }) => {
+    
+    const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [isLoading, setIsLoading] = useState(true);
 
     const initialStates = {
-        productName: product.name,
-        productPrice: product.price,
-        productDescription: product.description,
+        productName: product.productName ? product.productName : product.productId.name,
+        productPrice: product.productPrice ? product.productPrice : product.productId.price,
+        productDescription: product.productDescription ? product.productDescription : product.productId.description,
         productImage: [{}]
       }
   
@@ -53,8 +56,29 @@ const UserProductModal = ({ closeModal, product }) => {
   
       const [state, dispatch] = useReducer(reducer, initialStates)
 
-    const updateFormHandler = () => {
+    const updateFormHandler = (event) => {
+        event.preventDefault();
 
+        
+        setIsLoading(true) //display the loading spinner
+        
+        //save changes to the database
+        axios.put(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }/${ product.productId._id }`, {
+            productName: state.productName,
+            productPrice: state.productPrice,
+            productDescription: state.productDescription
+          })
+          .then((dbResponse) => {
+                  toast.success('Saved Successfully');
+                  setIsLoading(false);
+                  console.log(dbResponse)
+  
+          })
+          .catch(error => {
+              toast.error('Save Failed');
+              setIsLoading(false);
+              console.log(error)
+          })
     }
 
     useEffect(() => {
@@ -132,7 +156,7 @@ const UserProductModal = ({ closeModal, product }) => {
                         />
 
                         <button
-                            type='button'
+                            type='submit'
                             className='btn'
                         >
                             Update
