@@ -62,6 +62,7 @@ const ManageProducts = () => {
             <UserProductModal
               closeModal = { setIsModalOpen }
               product = { productModal }
+              setProductList = { setProductList }
             />
         }
         </div>

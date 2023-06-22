@@ -12,7 +12,7 @@ import { utils } from '../utils/Utils'
 import { ModalWrapper, UserProductWrapper } from '../assets/wrappers/ModalWrapper';
 import { GlobalVariables } from '../App';
 
-const UserProductModal = ({ closeModal, product }) => {
+const UserProductModal = ({ closeModal, product, setProductList }) => {
     
     const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
 
@@ -69,9 +69,14 @@ const UserProductModal = ({ closeModal, product }) => {
             productDescription: state.productDescription
           })
           .then((dbResponse) => {
-                  toast.success('Saved Successfully');
-                  setIsLoading(false);
-                  console.log(dbResponse)
+                  axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
+                      setProductList(dbResponse.data.productList);
+                      setIsLoading(false);
+                      toast.success('Saved Successfully');
+                  })
+                  .catch(error => {
+                      console.log(error)
+                  })
   
           })
           .catch(error => {
