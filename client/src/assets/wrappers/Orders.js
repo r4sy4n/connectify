@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
 const UserOrderWrapper = styled.main`
+    border-radius: 0.25rem;
+    width: 100%;
+    min-width: 80vw;
+    background: #fff;
+    padding: 3rem 2rem 4rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
     text-align: center;
     display: flex;
     align-items: center;
