@@ -13,7 +13,11 @@ const UserOrderModal = ({ closeModal, orderId }) => {
 
     const [ order, setOrder ] = useState();
     const [ isLoading, setIsLoading ] = useState(true);
-    console.log(orderId)
+
+    const titleCase = (text) => {
+        const result = text.replace(/([A-Z])/g, " $1");
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    }
 
     useEffect(() => {
         axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/orders/${ orderId }`).then((dbResponse) => {
@@ -59,7 +63,7 @@ const UserOrderModal = ({ closeModal, orderId }) => {
                                     return (
                                     <tr>
                                         <td>
-                                        { list[0] }
+                                        { titleCase(list[0]) }
                                         </td>
                                         <td>
                                         {
