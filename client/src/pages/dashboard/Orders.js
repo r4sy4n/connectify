@@ -6,14 +6,14 @@ import Loading from '../../components/Loading';
 
 import { GlobalVariables } from '../../App';
 import { UserOrderWrapper } from '../../assets/wrappers/Orders';
-import UserProductModal from '../../components/UserProductModal';
+import UserOrderModal from '../../components/UserOrderModal';
 
 const Orders = () => {
   
     const { globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [ orderList, setOrderList ] = useState();
-    const [ productModal, setProductModal ] = useState();
+    const [ orderId, setOrderId ] = useState();
     const [ isLoading, setIsLoading ] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -42,19 +42,20 @@ const Orders = () => {
         <div className='main-container'>
           <table>
             <thead>
-              <tr>
-                <th>Date Ordered</th>
-                <th>Tracking Number</th>
-                <th>Name</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-              </tr>
+              <th>Date Ordered</th>
+              <th>Tracking Number</th>
+              <th>Name</th>
+              <th>Phone Number</th>
+              <th>Status</th>
             </thead>
             <tbody>
               {
                 orderList.map(list => {
                   return (
-                    <tr>
+                    <tr onClick={ () => {
+                      setIsModalOpen(true);
+                      setOrderId(list._id);
+                    }}>
                       <td>
                         { list.status[ list.status.length -1 ].date.split(',')[0] }
                       </td>
@@ -78,10 +79,9 @@ const Orders = () => {
           </table>
           {
               isModalOpen &&
-              <UserProductModal
+              <UserOrderModal
                 closeModal = { setIsModalOpen }
-                product = { productModal }
-                setOrderList = { setOrderList }
+                orderId = { orderId }
               />
           }
         </div>

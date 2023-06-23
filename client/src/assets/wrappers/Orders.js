@@ -59,6 +59,7 @@ const UserOrderWrapper = styled.main`
     
     td {
         color: #808080;
+        background: #FFFFFF50;
         text-align: left;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -66,6 +67,14 @@ const UserOrderWrapper = styled.main`
     
     tr:nth-child(even) td {
         background: #f8f6ff;
+    }
+    
+    tr:hover {
+        cursor: pointer;
+    }
+    
+    tr:hover td {
+        background: #3498db50;
     }
 `
 export { UserOrderWrapper };
