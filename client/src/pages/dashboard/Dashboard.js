@@ -5,6 +5,7 @@ import Loading from '../../components/Loading';
 import axios from 'axios';
 import { GlobalVariables } from '../../App';
 import BarChartData from '../../components/BarChartData';
+import SalesChartData from '../../components/SalesChartData';
 
 
 const Dashboard = () => {
@@ -39,6 +40,7 @@ const Dashboard = () => {
         <section>
           <div className='grid-chart'>
             <BarChartData orders={orders}/>
+            <SalesChartData orders={orders}/>
           </div>
         </section>
       </div>
