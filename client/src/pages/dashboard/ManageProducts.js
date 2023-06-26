@@ -7,6 +7,7 @@ import Loading from '../../components/Loading';
 import { GlobalVariables } from '../../App';
 import { UserProductWrapper } from '../../assets/wrappers/Catalog';
 import UserProductModal from '../../components/UserProductModal';
+import AddProductModal from '../../components/AddProductModal';
 
 const ManageProducts = () => {
   
@@ -16,6 +17,7 @@ const ManageProducts = () => {
     const [ productModal, setProductModal ] = useState();
     const [ isLoading, setIsLoading ] = useState(true);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
     useEffect(() => {
         axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
@@ -26,6 +28,15 @@ const ManageProducts = () => {
             console.log(error)
         })
     },[]);
+
+    const openAddProductModal = () => {
+      setIsAddModalOpen(true);
+    };
+  
+    const closeModals = () => {
+      setIsModalOpen(false);
+      setIsAddModalOpen(false);
+    };
 
   return (
   <UserProductWrapper>
@@ -57,6 +68,10 @@ const ManageProducts = () => {
             </div>
             )
         }
+        <div className='list-container add-product-container' onClick={openAddProductModal}>
+            <h2>Add Product</h2>
+            <button>+</button>
+        </div>
         {
             isModalOpen &&
             <UserProductModal
@@ -65,6 +80,7 @@ const ManageProducts = () => {
               setProductList = { setProductList }
             />
         }
+        {isAddModalOpen && <AddProductModal closeModal={closeModals} setProductList={setProductList} />}
         </div>
     }
   </UserProductWrapper>
