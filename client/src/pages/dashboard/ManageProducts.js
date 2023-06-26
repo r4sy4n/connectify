@@ -10,7 +10,7 @@ import UserProductModal from '../../components/UserProductModal';
 
 const ManageProducts = () => {
   
-    const { globalCurrentUser } = useContext( GlobalVariables )
+    const { globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [ productList, setProductList ] = useState();
     const [ productModal, setProductModal ] = useState();
@@ -18,7 +18,7 @@ const ManageProducts = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }/product-list`).then((dbResponse) => {
+        axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
             setProductList(dbResponse.data.productList);
             setIsLoading(false);
         })
@@ -27,9 +27,6 @@ const ManageProducts = () => {
         })
     },[]);
 
-
-    // if (isLoading)
-    // return <Loading center />
   return (
   <UserProductWrapper>
     <div className='title-container'>
@@ -50,7 +47,7 @@ const ManageProducts = () => {
                 className='list-container'
                 onClick={() => {
                   setIsModalOpen(true);
-                  setProductModal(list.productId);
+                  setProductModal(list);
                 }}
                 style={{ backgroundImage:`url(${ list.productId.image[0].url })` }}
             >
@@ -65,6 +62,7 @@ const ManageProducts = () => {
             <UserProductModal
               closeModal = { setIsModalOpen }
               product = { productModal }
+              setProductList = { setProductList }
             />
         }
         </div>

@@ -233,31 +233,22 @@ router.put('/:userId/:productId', (request, response) => {
         productPrice
     } = request.body;
     
-    // find the user that will have the information updated
-    User.findOne({ _id: userId }).then(dbResponse => {
-
-        //specify the image that will be uploaded and where it will be saved in Cloudinary
-        const imageData = uploadFiles(request.file.path, `Connectify/${ dbResponse.userType }/${ userId }/Product Images/ ${ productId }`).then(data => {
-
-            //update the product in the user's product list
-            User.updateOne( 
-                { _id: userId },
-                {
-                        productList: {
-                            productId: productId,
-                            productName: productName,
-                            productDescription: productDescription,
-                            productPrice: productPrice
-                        }
-                }
-            )
-            .then( dbResponse => {
-                response.status( 200 ).send({ message: 'Success' });
-            })
-            .catch((error) => {
-                response.status( 500 ).send({ message: 'Server Error' });
-            });
-        });
+    //update the product in the user's product list
+    User.updateOne( 
+        { _id: userId, 'productList.productId': productId },
+        {
+            $set: {
+                'productList.$.productName': productName,
+                'productList.$.productPrice': productPrice,
+                'productList.$.productDescription': productDescription
+            }
+        }
+    )
+    .then( dbResponse => {
+        response.status( 200 ).send({ message: 'Success' });
+    })
+    .catch((error) => {
+        response.status( 500 ).send({ message: 'Server Error' });
     });
 });
 

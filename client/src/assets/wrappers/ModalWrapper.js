@@ -113,4 +113,19 @@ const RegisterWrapper = styled(LoginWrapper)`
 const UserProductWrapper = styled.div`
 `
 
-export { ModalWrapper, LoginWrapper, RegisterWrapper, UserProductWrapper };
+const UserOrderWrapper = styled.div`
+    table.orderModal {
+        display: grid;
+        border-collapse: collapse;
+        min-width: 100%;
+        grid-template-columns: 
+        minmax(150px, 1fr)
+        minmax(150px, 1.67fr);
+
+        td:first-child {
+            font-weight: 700;
+        }
+    }
+`
+
+export { ModalWrapper, LoginWrapper, RegisterWrapper, UserProductWrapper, UserOrderWrapper };
