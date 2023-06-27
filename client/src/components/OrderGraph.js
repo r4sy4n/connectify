@@ -47,7 +47,7 @@ const OrderGraph = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="count" fill="rgb(75, 192, 192)" name="Number of Orders" />
+          <Bar dataKey="count" fill="#4bc0c0" name="Number of Orders" />
         </BarChart>
     </div>
   );
