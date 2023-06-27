@@ -6,6 +6,7 @@ import axios from 'axios';
 import { GlobalVariables } from '../../App';
 import BarChartData from '../../components/BarChartData';
 import SalesChartData from '../../components/SalesChartData';
+import OrderGraph from '../../components/OrderGraph';
 
 
 const Dashboard = () => {
@@ -35,6 +36,7 @@ const Dashboard = () => {
         <h1>Dashboard</h1>
         <section className='flex'>
           <div className='grid'>
+            <OrderGraph />
           </div>
         </section>
         <section>
