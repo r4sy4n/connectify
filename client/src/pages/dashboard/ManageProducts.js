@@ -62,8 +62,8 @@ const ManageProducts = () => {
                 }}
                 style={{ backgroundImage:`url(${ list.productId.image[0].url })` }}
             >
-                <h2>{ list.productId.name }</h2>
-                <p>{ list.productId.description }</p>
+                <h2>{ list.productName ? list.productName : list.productId.name }</h2>
+                <p>{ list.description ? list.description : list.productId.description }</p>
                 <button>EDIT</button>
             </div>
             )
