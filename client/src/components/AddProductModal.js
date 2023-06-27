@@ -20,24 +20,34 @@ const AddProductModal = ({ closeModal, setProductList }) => {
   const [productName, setProductName] = useState('');
   const [productPrice, setProductPrice] = useState('');
   const [productDescription, setProductDescription] = useState('');
+  const [productStock, setProductStock] = useState('');
+  const [productCategory, setProductCategory] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const addProductHandler = (event) => {
     event.preventDefault();
+
+    setIsLoading(true)
+
     axios
-      .post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${globalLoggedInUserId}/product-list`, {
+      .post(`${process.env.REACT_APP_API_BASE_URL}/api/v1/products`, {
         name: productName,
         price: productPrice,
         description: productDescription,
+        stock: productStock,
+        catalog: productCategory
       })
       .then((response) => {
-        setProductList((prevProductList) => [...prevProductList, response.data.product]);
-        toast.success('Product added successfully.');
+        axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: response.data.product }).then(userResponse => {
+          toast.success('Product added successfully.');
+          setIsLoading(false)
+        })
 
         closeModal();
       })
       .catch((error) => {
         toast.error('Failed to add product.');
+        setIsLoading(false)
         console.log(error);
       });
   };
@@ -61,7 +71,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
           <UserProductWrapper>
             <form onSubmit={addProductHandler}>
               <label htmlFor='productName' className='form-label'>
-                Product Name:
+                Name:
               </label>
               <input
                 type='text'
@@ -72,7 +82,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
               />
 
               <label htmlFor='productPrice' className='form-label'>
-                Product Price:
+                Price:
               </label>
               <input
                 type='number'
@@ -83,7 +93,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
               />
 
               <label htmlFor='productDescription' className='form-label'>
-                Product Description:
+                Description:
               </label>
               <input
                 type='text'
@@ -92,6 +102,32 @@ const AddProductModal = ({ closeModal, setProductList }) => {
                 value={productDescription}
                 onChange={(event) => setProductDescription(event.target.value)}
               />
+              
+              <label htmlFor='productStock' className='form-label'>
+                Stock:
+              </label>
+              <input
+                type='number'
+                id='productStock'
+                className='form-input'
+                value={productStock}
+                onChange={(event) => setProductStock(event.target.value)}
+              />
+
+              <label htmlFor='productCategory' className='form-label'>
+                Category:
+              </label>
+              <select
+                type='text'
+                id='productCategory'
+                className='form-input'
+                value={productCategory}
+                onChange={(event) => setProductCategory(event.target.value)}
+              >
+              <option>Product 1</option>
+                <option>Product 2</option>
+                <option>Product 3</option>
+              </select>
 
               <button type='submit' className='btn'>
                 Add Product
