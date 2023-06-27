@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'rec
 
 const BarChartData = ({orders}) => {
   const data = [
-  { name: 'Orders', value: orders.filter(order => order).length },
+   { name: 'Orders', value: orders.reduce((count, order) => count + order.status.length, 0) },
 ];
 
   return (
