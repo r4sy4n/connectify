@@ -18,6 +18,12 @@ const ProductSchema = mongoose.Schema({
         ref: 'Seller',
         default: []
     }],
+    
+    image: [{
+        url: String,
+        public_id: String,
+        _id: false
+    }],
  
     isDeleted: {
         type: Boolean,

@@ -64,6 +64,7 @@ router.post( '/', ( request, response ) => {
         variation,
         catalog,
         sellers: [],
+        image: [],
         isDeleted: false
     });
 
