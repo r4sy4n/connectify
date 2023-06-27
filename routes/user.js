@@ -189,11 +189,11 @@ router.put('/:userId/product-list', (request, response) => {
         value = {
             $addToSet: {
                 productList: {
-                    productId: product.productId,
-                    productName: product.productName,
-                    productDescription: product.productDescription,
-                    productPrice: product.productPrice,
-                    productImage: product.productImage,
+                    productId: product._id,
+                    productName: product.name,
+                    productDescription: product.description,
+                    productPrice: product.price,
+                    productImage: product.image,
                 }
             }
         }
@@ -216,10 +216,10 @@ router.put('/:userId/product-list', (request, response) => {
         value
     )
     .then( dbResponse => {
-        response.status( 200 ).send({ message: 'Success' });
+        response.status( 200 ).send({ message: 'Success', test: product });
     })
     .catch((error) => {
-        response.status( 500 ).send({ message: 'Server Error' });
+        response.status( 500 ).send({ message: error });
     });
 });
 
