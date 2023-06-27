@@ -81,17 +81,6 @@ const AddProductModal = ({ closeModal, setProductList }) => {
                 onChange={(event) => setProductName(event.target.value)}
               />
 
-              <label htmlFor='productPrice' className='form-label'>
-                Price:
-              </label>
-              <input
-                type='number'
-                id='productPrice'
-                className='form-input'
-                value={productPrice}
-                onChange={(event) => setProductPrice(event.target.value)}
-              />
-
               <label htmlFor='productDescription' className='form-label'>
                 Description:
               </label>
@@ -101,6 +90,17 @@ const AddProductModal = ({ closeModal, setProductList }) => {
                 className='form-input'
                 value={productDescription}
                 onChange={(event) => setProductDescription(event.target.value)}
+              />
+
+              <label htmlFor='productPrice' className='form-label'>
+                Price:
+              </label>
+              <input
+                type='number'
+                id='productPrice'
+                className='form-input'
+                value={productPrice}
+                onChange={(event) => setProductPrice(event.target.value)}
               />
               
               <label htmlFor='productStock' className='form-label'>
