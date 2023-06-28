@@ -62,6 +62,15 @@ const CatalogWrapper = styled.main`
       border: 2px solid #FFFFFF;
     }
   }
+
+  @media screen and (max-width: 768px) {
+    .main-container {
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      width: 90%;
+      margin: 50px 0;
+    }
+  }
 `
 
 const CategoryWrapper = styled(CatalogWrapper)`
@@ -113,6 +122,15 @@ const ProductWrapper = styled(CatalogWrapper)`
 
   .title-container {
     background: transparent; 
+  }
+
+  @media screen and (max-width: 768px) {
+    .main-container {
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      width: 90%;
+      margin: 50px 0;
+    }
   }
 `
 
