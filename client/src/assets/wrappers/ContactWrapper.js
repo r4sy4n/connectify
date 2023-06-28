@@ -57,6 +57,8 @@ const ContactWrapper = styled.main`
 
     .contact-border {
       margin: 1rem 0;
+      width: 100%;
+      height: 4px;
     }
   }
 `;
