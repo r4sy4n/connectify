@@ -19,9 +19,28 @@ const Navbar = () => {;
     <>
     <Wrapper>
       <div className='nav-center'>
-          <LogoBanner/>
+        <div className="navbar icon">
+        <div className="container nav-container">
+            <input className="checkbox" type="checkbox" name="" id="" />
+            <div className="hamburger-lines">
+              <span className="line line1"></span>
+              <span className="line line2"></span>
+              <span className="line line3"></span>
+            </div>  
+            
+          <div class="menu-items">
+                <li><Link to='/'style={{ textDecoration: 'none' }}>Home</Link></li>
+                <li><Link to='/catalog' style={{ textDecoration: 'none' }}>Catalog</Link></li>
+                <li><Link to='/contactus' style={{ textDecoration: 'none' }}>Contact Us</Link></li>
+          </div>
+        </div>
+      </div>
           <div>
-            <ul>
+            <LogoBanner/>
+          </div>
+            
+          <div>
+            <ul className="list">
                 <li><Link to='/'style={{ textDecoration: 'none' }}>home</Link></li>
                 <li><Link to='/catalog' style={{ textDecoration: 'none' }}>catalog</Link></li>
                 <li><Link to='/contactus' style={{ textDecoration: 'none' }}>contact us</Link></li>

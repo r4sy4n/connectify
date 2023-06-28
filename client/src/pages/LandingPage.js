@@ -18,14 +18,14 @@ const LandingPage = () => {
    <Wrapper>
       <section className='container page'>
         <div>
-          <h1>CONNECTIFY</h1>
-          <p> Connectify is a smart and intuitive marketplace app that connects buyers, sellers, and suppliers, enabling them to form valuable connections and secure lucrative deals. With its user-friendly interface and powerful features, Connectify revolutionizes the way individuals buy and sell products.</p>
+          <h1 className='title'>CONNECTIFY</h1>
+          <p className='description'> Connectify is a smart and intuitive marketplace app that connects buyers, sellers, and suppliers, enabling them to form valuable connections and secure lucrative deals. With its user-friendly interface and powerful features, Connectify revolutionizes the way individuals buy and sell products.</p>
         </div>
-          <LogoBig/>
+          <LogoBig />
       </section>
       <section className='how-container'>
-        <h1>HOW IT WORKS</h1>
-        <h2>JUMPSTART YOUR ONLINE BUSINESS WITH CONNECTIFY</h2>
+        <h1 className='title'>HOW IT WORKS</h1>
+        <h2 className='subtitle'>JUMPSTART YOUR ONLINE BUSINESS WITH CONNECTIFY</h2>
         <div className='image-container'>
           <div>
             <img src={register} alt='register' className='pic' />
@@ -43,8 +43,8 @@ const LandingPage = () => {
         <button className='btn' onClick={btnHandler}>Subscribe</button>
       </section>
       <section className='why-container'>
-        <h1>WHY CHOOSE CONNECTIFY</h1>
-        <h2>Key Features</h2>
+        <h1 className='title'>WHY CHOOSE CONNECTIFY</h1>
+        <h2 className='subtitle'>Key Features</h2>
         <ul>
           <li><p><strong>Seamless Connectivity</strong> <br></br> Connectify provides a seamless and intuitive platform that connects buyers, sellers, and suppliers, enabling efficient and transparent transactions.</p></li>
           <li><p><strong>Verified Suppliers</strong><br></br> Connectify ensures that suppliers on the platform are verified, establishing trust and reliability in the sourcing process for sellers, who gain access to a network of reputable suppliers.</p></li>
@@ -56,7 +56,7 @@ const LandingPage = () => {
         </ul>
       </section>
       <section className='brand-container'>
-        <h1>Our Brand Partners</h1>
+        <h1 className='title'>Our Brand Partners</h1>
       </section>
       <Footer />
     </Wrapper>

@@ -48,13 +48,16 @@ const Wrapper = styled.main`
     background-color: #9DB2BF;
   }
   .how-container{
-    height: 80vh;
+
   }
   .brand-container{
     height: 60vh;
   }
   .pic{
     width: 20rem;
+  }
+  .why-container{
+    margin-top: 2rem;
   }
   .image-container{
     display: flex;
@@ -70,24 +73,48 @@ const Wrapper = styled.main`
   }
   .btn{
     padding: 1rem 2rem;
+    margin-bottom: 1.5rem;
   }
 
-/* xs */
-/* @media (min-width: 475px) {} */
-
-/* sm */
-/* @media (min-width: 640px) {} */
 
 /* md */
-/* @media (min-width: 768px) {} */
+@media only screen and (max-width: 768px) {
+  .title{
+    font-size: 2.5rem;
+  }
+  .subtitle{
+    font-size: 2rem;
+  }
+
+  .description{
+    font-size: 1rem;
+  }
+  .logo-big{
+    width: 25rem;
+  }
+  .image-container{
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    gap: 0;
+  }
+    .pic{
+    width: 8rem;
+  }
+  .how-container{
+    padding-top: 1rem;
+  }
+}
 
 /* lg */
-/* @media (min-width: 1024px) {} */
-
-/* xl */
-/* @media (min-width: 1280px) {} */
-
-/* 2xl */
-/* @media (min-width: 1536px) {} */
-  `
+@media only screen and (max-width: 1024px) {
+  .pic{
+    width: 10rem;
+  }
+  .text{
+    font-size: 1.2rem;
+  }
+}
+`
 export default Wrapper;
