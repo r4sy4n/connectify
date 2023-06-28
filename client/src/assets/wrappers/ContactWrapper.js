@@ -47,7 +47,6 @@ const ContactWrapper = styled.main`
   }
 
   @media screen and (max-width: 768px) {
-    /* Adjust styles for screens up to 768px wide */
     .contact-container {
       flex-direction: column;
       align-items: center;
