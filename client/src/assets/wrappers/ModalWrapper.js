@@ -125,6 +125,10 @@ const UserOrderWrapper = styled.div`
         td:first-child {
             font-weight: 700;
         }
+    
+        tr {
+            pointer-events: none;
+        }
     }
 `
 
