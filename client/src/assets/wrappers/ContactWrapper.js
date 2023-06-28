@@ -1,57 +1,68 @@
 import styled from "styled-components";
 
 const ContactWrapper = styled.main`
-
-text-align: center;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-direction: column;
-position: relative;
-margin: 9rem 0;
-cursor: pointer;
-
-.title-container {
-  width: 100%;
-
-
-  p {
-    margin: 0;
-    margin-top: 10px;
-    text-align: center; 
-    max-width: none;
-  }
-
-  h1 {
-    margin: 0;
-    font-weight: bold;
-  }
-}
-
-
-/* Contact Details */
-
-.contact-container {
+  text-align: center;
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-top: 3rem;
-  gap: 3rem;
-  padding: 3rem;
-}
+  flex-direction: column;
+  position: relative;
+  margin: 9rem 0;
+  cursor: pointer;
 
+  .title-container {
+    width: 100%;
 
-/* Border */
+    p {
+      margin: 0;
+      margin-top: 10px;
+      text-align: center;
+      max-width: none;
+    }
 
-.contact-border {
-  width: 5px;
-  height: 23rem;
-  background-color: #EB455F;
-  margin: 0 3rem;
-  align-self: center;
-}
-`
+    h1 {
+      margin: 0;
+      font-weight: bold;
+    }
+  }
 
-// Contact Deatils
+  /* Contact Details */
+
+  .contact-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    gap: 3rem;
+    padding: 3rem;
+  }
+
+  /* Border */
+
+  .contact-border {
+    width: 5px;
+    height: 23rem;
+    background-color: #EB455F;
+    margin: 0 3rem;
+    align-self: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    /* Adjust styles for screens up to 768px wide */
+    .contact-container {
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+      padding: 1rem;
+    }
+
+    .contact-border {
+      margin: 1rem 0;
+    }
+  }
+`;
+
+// Contact Details
 
 const ContactDetailsWrapper = styled.div`
   display: flex;
@@ -143,12 +154,11 @@ const Button = styled.button`
   width: 7rem;
 `;
 
-
 export {
-  ContactWrapper, 
-  ContactDetailsWrapper, 
-  ContactItem, 
-  ContactFormWrapper, 
-  Form, 
+  ContactWrapper,
+  ContactDetailsWrapper,
+  ContactItem,
+  ContactFormWrapper,
+  Form,
   Button
-}
+};
