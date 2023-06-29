@@ -94,6 +94,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
 
       axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: list })
       .then(userResponse => {
+        closeModal();
         toast.success('Product added successfully.');
         setIsLoading(false)
       })
