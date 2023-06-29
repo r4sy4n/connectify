@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Loading from '../../components/Loading';
@@ -8,12 +7,10 @@ import { GlobalVariables } from '../../App';
 import { UserProductWrapper } from '../../assets/wrappers/Catalog';
 import UserProductModal from '../../components/UserProductModal';
 import AddProductModal from '../../components/AddProductModal';
-import Catalog from '../Catalog';
-import TestModal from '../../components/TestModal';
 
 const ManageProducts = () => {
   
-    const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
+    const { globalLoggedInUserId } = useContext( GlobalVariables )
 
     const [ productList, setProductList ] = useState();
     const [ productModal, setProductModal ] = useState();
@@ -88,22 +85,16 @@ const ManageProducts = () => {
                   setProductList = { setProductList }
                 />
             }
+            {
+                isAddModalOpen && 
+                <AddProductModal
+                  closeModal={closeModals}
+                  setProductList={setProductList}
+                />
+            }
             </div>
         }
       </UserProductWrapper>
-      {
-        globalCurrentUser &&
-        globalCurrentUser.userType === 'supplier'
-        ?
-          isAddModalOpen && 
-          <AddProductModal
-            closeModal={closeModals}
-            setProductList={setProductList}
-          />
-        :
-          isAddModalOpen && 
-          alert('Open List of All Products')
-      }
     </>
   )
 }
