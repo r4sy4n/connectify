@@ -70,8 +70,8 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
           })
           .then((dbResponse) => {
             setIsLoading(false);
-            toast.success('Saved Successfully');
             closeModal();
+            toast.success('Saved Successfully');
   
           })
           .catch(error => {
@@ -94,8 +94,8 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
             })
             .then((dbResponse) => {
                 setIsLoading(false);
-                toast.success('Product Deleted');
                 closeModal();
+                toast.success('Product Deleted');
     
             })
             .catch(error => {
