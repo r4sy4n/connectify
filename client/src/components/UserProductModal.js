@@ -12,7 +12,7 @@ import { utils } from '../utils/Utils'
 import { ModalWrapper, UserProductWrapper } from '../assets/wrappers/ModalWrapper';
 import { GlobalVariables } from '../App';
 
-const UserProductModal = ({ closeModal, product, setProductList }) => {
+const UserProductModal = ({ closeModal, product }) => {
     
     const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
 
@@ -69,8 +69,8 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
             productDescription: state.productDescription
           })
           .then((dbResponse) => {
-            setIsLoading(false);
             closeModal();
+            setIsLoading(false);
             toast.success('Saved Successfully');
   
           })
@@ -93,8 +93,8 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
                 product: product
             })
             .then((dbResponse) => {
-                setIsLoading(false);
                 closeModal();
+                setIsLoading(false);
                 toast.success('Product Deleted');
     
             })
