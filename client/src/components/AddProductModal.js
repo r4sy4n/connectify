@@ -61,22 +61,24 @@ const AddProductModal = ({ closeModal, setProductList }) => {
   const browseProduct = (array) => {
     let displayContainer = [];
 
-    array.map(list => 
+    array.map(list => {
+      const existingProduct = globalCurrentUser.productList.filter(product => product.productId === list._id); //checks if the product is already in the user's product list
       
       displayContainer.push(
 
         <div
           key={ list.name }
-          className='list-container'
-          onClick={() => { productPage === 'catalog' ? changeCategory(list.name) : addProduct(list) }}
+          className={ `list-container ${ existingProduct.length > 0 ? 'exist' : null }` }
+          onClick={() => { productPage === 'catalog' ? changeCategory(list.name) : existingProduct.length > 0 ? toast.error('Product already in the list.') : addProduct(list)  }}
+          disabled={ existingProduct.length > 0 ? true : false }
           style={{ backgroundImage:`url(${ list.image[0].url || list.image })` }}
         >
           <h2>{ list.name }</h2>
           <p>{ list.description }</p>
-          <button> { productPage === 'catalog' ? 'OPEN' : 'ADD PRODUCT' } </button>
+          <button> { productPage === 'catalog' ? 'OPEN' : existingProduct.length > 0 ? 'PRODUCT ALREADY ADDED'  : 'ADD PRODUCT' } </button>
         </div>
       )
-    )
+    })
 
     const changeCategory = (list) => {
       
@@ -87,6 +89,9 @@ const AddProductModal = ({ closeModal, setProductList }) => {
     }
 
     const addProduct = (list) => {
+
+      setIsLoading(true)
+
       axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: list })
       .then(userResponse => {
         toast.success('Product added successfully.');
@@ -99,8 +104,6 @@ const AddProductModal = ({ closeModal, setProductList }) => {
       });
     }
 
-
-    
     return displayContainer;
   }
 
