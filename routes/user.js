@@ -204,7 +204,7 @@ router.put('/:userId/product-list', (request, response) => {
         value = {
             $pull: {
                 productList: {
-                    productId: product.productId
+                    productId: product._id
                 }
             }
         }
@@ -216,7 +216,7 @@ router.put('/:userId/product-list', (request, response) => {
         value
     )
     .then( dbResponse => {
-        response.status( 200 ).send({ message: 'Success', test: product });
+        response.status( 200 ).send({ message: 'Success', test: dbResponse });
     })
     .catch((error) => {
         response.status( 500 ).send({ message: error });

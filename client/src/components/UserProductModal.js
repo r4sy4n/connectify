@@ -12,7 +12,7 @@ import { utils } from '../utils/Utils'
 import { ModalWrapper, UserProductWrapper } from '../assets/wrappers/ModalWrapper';
 import { GlobalVariables } from '../App';
 
-const UserProductModal = ({ closeModal, product, setProductList }) => {
+const UserProductModal = ({ closeModal, product }) => {
     
     const { globalCurrentUser, globalLoggedInUserId } = useContext( GlobalVariables )
 
@@ -69,14 +69,9 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
             productDescription: state.productDescription
           })
           .then((dbResponse) => {
-                  axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
-                      setProductList(dbResponse.data.productList);
-                      setIsLoading(false);
-                      toast.success('Saved Successfully');
-                  })
-                  .catch(error => {
-                      console.log(error)
-                  })
+            closeModal();
+            setIsLoading(false);
+            toast.success('Saved Successfully');
   
           })
           .catch(error => {
@@ -84,6 +79,31 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
               setIsLoading(false);
               console.log(error)
           })
+    }
+
+    const removeProduct = (product) => {
+        
+        return () => {
+            console.log(product)
+            setIsLoading(true) //display the loading spinner
+            
+            //delete the product in the user's product list
+            axios.put(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }/product-list`, {
+                type: 'remove',
+                product: product
+            })
+            .then((dbResponse) => {
+                closeModal();
+                setIsLoading(false);
+                toast.success('Product Deleted');
+    
+            })
+            .catch(error => {
+                toast.error('Failed to Delete');
+                setIsLoading(false);
+                console.log(error)
+            })
+        }
     }
 
     useEffect(() => {
@@ -160,12 +180,22 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
                             }
                         />
 
-                        <button
-                            type='submit'
-                            className='btn'
-                        >
-                            Update
-                        </button>
+                        <div className='buttonContainer'>
+                            <button
+                                type='submit'
+                                className='btn'
+                            >
+                                Update
+                            </button>
+
+                            <button
+                                type='button'
+                                className='btn'
+                                onClick={ removeProduct(product.productId) }
+                            >
+                                Remove
+                            </button>
+                        </div>
                     </form>
                         
                 </UserProductWrapper>
