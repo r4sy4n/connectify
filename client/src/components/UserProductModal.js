@@ -69,14 +69,9 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
             productDescription: state.productDescription
           })
           .then((dbResponse) => {
-                  axios.get(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalLoggedInUserId }/product-list`).then((dbResponse) => {
-                      setProductList(dbResponse.data.productList);
-                      setIsLoading(false);
-                      toast.success('Saved Successfully');
-                  })
-                  .catch(error => {
-                      console.log(error)
-                  })
+            setIsLoading(false);
+            toast.success('Saved Successfully');
+            closeModal();
   
           })
           .catch(error => {
@@ -84,6 +79,31 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
               setIsLoading(false);
               console.log(error)
           })
+    }
+
+    const removeProduct = (product) => {
+        
+        return () => {
+            console.log(product)
+            setIsLoading(true) //display the loading spinner
+            
+            //delete the product in the user's product list
+            axios.put(`${ process.env.REACT_APP_API_BASE_URL }/api/v1/users/${ globalCurrentUser._id }/product-list`, {
+                type: 'remove',
+                product: product
+            })
+            .then((dbResponse) => {
+                setIsLoading(false);
+                toast.success('Product Deleted');
+                closeModal();
+    
+            })
+            .catch(error => {
+                toast.error('Failed to Delete');
+                setIsLoading(false);
+                console.log(error)
+            })
+        }
     }
 
     useEffect(() => {
@@ -160,12 +180,22 @@ const UserProductModal = ({ closeModal, product, setProductList }) => {
                             }
                         />
 
-                        <button
-                            type='submit'
-                            className='btn'
-                        >
-                            Update
-                        </button>
+                        <div className='buttonContainer'>
+                            <button
+                                type='submit'
+                                className='btn'
+                            >
+                                Update
+                            </button>
+
+                            <button
+                                type='button'
+                                className='btn'
+                                onClick={ removeProduct(product.productId) }
+                            >
+                                Remove
+                            </button>
+                        </div>
                     </form>
                         
                 </UserProductWrapper>
