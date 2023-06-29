@@ -59,7 +59,7 @@ ul {
 .btn {
   cursor: pointer;
   color: #AEE2FF;
-  background: #EB455F;
+  background: #EB455F !important;
   border: transparent;
   border-radius: 0.25rem;
   letter-spacing: 1px;

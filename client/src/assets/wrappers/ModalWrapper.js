@@ -119,6 +119,15 @@ const RegisterWrapper = styled(LoginWrapper)`
 `
 
 const UserProductWrapper = styled.div`
+
+    .buttonContainer {
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 20px;
+        left: 0;
+        right: 0;
+        bottom: 10%;
+    }
 `
 
 const UserOrderWrapper = styled.div`
