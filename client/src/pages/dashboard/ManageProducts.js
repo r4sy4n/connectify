@@ -80,7 +80,7 @@ const ManageProducts = () => {
             {
                 isModalOpen &&
                 <UserProductModal
-                  closeModal = { setIsModalOpen }
+                  closeModal = { closeModals }
                   product = { productModal }
                   setProductList = { setProductList }
                 />

@@ -17,7 +17,7 @@ import { categories } from '../assets/data/CategoryList';
 import { CloseCircleOutline } from '@ricons/ionicons5';
 import { Icon } from '@ricons/utils'
 
-const AddProductModal = ({ closeModal, setProductList }) => {
+const AddProductModal = ({ closeModal }) => {
   const { globalLoggedInUserId, globalCurrentUser } = useContext( GlobalVariables )
 
   const [productName, setProductName] = useState('');
@@ -45,11 +45,11 @@ const AddProductModal = ({ closeModal, setProductList }) => {
       })
       .then((response) => {
         axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: response.data.product }).then(userResponse => {
+          closeModal();
           toast.success('Product added successfully.');
           setIsLoading(false)
         })
 
-        closeModal();
       })
       .catch((error) => {
         toast.error('Failed to add product.');
@@ -94,6 +94,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
 
       axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: list })
       .then(userResponse => {
+        closeModal();
         toast.success('Product added successfully.');
         setIsLoading(false)
       })
