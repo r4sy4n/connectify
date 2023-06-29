@@ -439,7 +439,10 @@ const LoginRegister = ({ closeModal }) => {
 
                     <br/>
 
-                    <p>By Clicking "Sign Up", you accept the Connectify <span>Terms and Conditions</span></p>
+                    <div className='terms-container'>
+                        <p className='terms-text'>By Clicking "Sign Up", you accept the Connectify</p>
+                        <p className='terms'>Terms and Conditions</p>
+                    </div>
 
                     <div className='buttonContainer'>
                         <button
@@ -453,8 +456,9 @@ const LoginRegister = ({ closeModal }) => {
 
                     <br/>
 
-                    <div className='already_member'>
-                      <p>Already have a Connectify Account? <span className='login-text' onClick={ formToggle }>Log In!</span></p>
+                    <div className='already-member'>
+                        <p className='member-text'>Already have a Connectify account?</p> {' '}
+                        <p className='member-log-in' onClick={formToggle}>Log In!</p>
                     </div>
             </RegisterWrapper>
         

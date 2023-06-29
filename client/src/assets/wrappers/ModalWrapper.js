@@ -91,6 +91,7 @@ const RegisterWrapper = styled(LoginWrapper)`
 
     .buttonContainer {
         position: relative;
+        text-align: center;
     }
 
     form {
@@ -105,8 +106,15 @@ const RegisterWrapper = styled(LoginWrapper)`
         cursor: pointer;
     }
 
-    .already_member {
-        text-align: center;
+    .already-member, .terms-container {
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+    }  
+
+    .member-log-in, .terms {
+        color: blue;
+        cursor: pointer;
     }
 `
 
