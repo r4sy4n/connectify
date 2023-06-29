@@ -68,7 +68,7 @@ const AddProductModal = ({ closeModal, setProductList }) => {
         <div
           key={ list.name }
           className='list-container'
-          onClick={() => { changeCategory(list.name) }}
+          onClick={() => { productPage === 'catalog' ? changeCategory(list.name) : addProduct(list) }}
           style={{ backgroundImage:`url(${ list.image[0].url || list.image })` }}
         >
           <h2>{ list.name }</h2>
@@ -84,6 +84,19 @@ const AddProductModal = ({ closeModal, setProductList }) => {
         setProductPage('product');
         setCategory( list.trim().replace(/\s+/g, '-').toLowerCase());
       }
+    }
+
+    const addProduct = (list) => {
+      axios.put(`${process.env.REACT_APP_API_BASE_URL}/api/v1/users/${ globalLoggedInUserId }/product-list`, { type: 'add', product: list })
+      .then(userResponse => {
+        toast.success('Product added successfully.');
+        setIsLoading(false)
+      })
+      .catch((error) => {
+        toast.error('Failed to add product.');
+        setIsLoading(false)
+        console.log(error);
+      });
     }
 
 
