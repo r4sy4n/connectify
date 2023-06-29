@@ -63,6 +63,24 @@ const CatalogWrapper = styled.main`
     }
   }
 
+  .exist {
+    opacity: 0.5;
+    filter: grayscale(1);
+
+    &:hover {
+      cursor: auto;
+    }
+  }
+
+  .exist button {
+    filter: grayscale(1);
+
+    &:hover {
+      cursor: auto;
+      border: 2px solid #FFFFFF80;
+    }
+  }
+
   @media screen and (max-width: 768px) {
     .main-container {
       grid-template-columns: 1fr;
